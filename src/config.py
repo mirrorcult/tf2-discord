@@ -1,6 +1,6 @@
 client_id = "451950787996680192"
 
-"maps" = {
+maps = {
 		"surf_": "surf",
 		"jump_": "jump",
 		"bhop_": "bhop",
