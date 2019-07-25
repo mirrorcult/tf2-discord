@@ -126,4 +126,4 @@ maps = {
 		"ctf_well": "well",
 		"arena_well": "well",
 		"cp_yukon": "yukon"
-}
+}  
