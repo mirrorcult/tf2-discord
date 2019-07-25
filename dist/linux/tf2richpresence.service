@@ -8,7 +8,3 @@ Type=simple
 ExecStart=/usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
 Restart=on-failure
 RestartSec=10
-KillMode=process
-
-[Install]
-WantedBy=multi-user.target

@@ -6,10 +6,10 @@
 
 # Steps:
 # 1. Make sure user is running -condebug
-# 1. Get user's TF2 directory
-# 2. Copy info about TF2 dir into config.py
+# 2. Get user's TF2 directory
 # 3. Run 'pip install -r requirements.txt' 
 # 4. Copy all necessary files to installation directory, based on OS (C:\Program Files (x86)\ or /usr/share)
+# 4.5: Copy steamdir into config.py
 # 5. Ensure that the program runs in background and runs on startup (pythonw for windows, nohup python & for linux)
 
 echo "**IMPORTANT**"
@@ -24,10 +24,9 @@ echo ""
 
 could_find=0
 steamdir=""
-steamdir_prompt="y"
+steamdir_prompt="n"
 
 if [ -d ~/.steam/steam ]; then
-    let could_find=1
     echo "Your steam games directory is assumed to be at ~/.steam/steam. Is this correct? [y/n] "
     read steamdir_prompt
     if [ $steamdir_prompt == "y" ]; then
@@ -35,23 +34,15 @@ if [ -d ~/.steam/steam ]; then
     fi
 else
     if [ -d ~/.local/share/Steam ]; then
-        let could_find=1
         echo "Your steam games directory is assumed to be at ~/.local/share/steam. Is this correct? [y/n] "
         read steamdir_prompt
         if [ $steamdir_prompt == "y" ]; then
             let steamdir="~/.local/share/steam"
         fi
-    else
-        echo "Could not find steam directory. Enter location of steam directory: "
-        read steamdir
-        if [ ! -d $steamdir ]; then
-            echo "Not a valid directory."
-            exit
-        fi
     fi
 fi
 
-if [ steamdir_prompt != "y" ]; then
+if [ ! steamdir_prompt == "y" ]; then
     echo "Could not find steam directory. Enter location of steam directory: "
     read steamdir
     if [ ! -d $steamdir ]; then
@@ -60,4 +51,28 @@ if [ steamdir_prompt != "y" ]; then
     fi
 fi
 
-echo -e "\nconsole_log_directory = \"$steamdir/steamapps/common/Team Fortress 2/tf/console.log\"" >> src/config.py
+# Step 3:
+echo "Make sure you have python3 and pip installed, if you didn't listen earlier!"
+pip install -r requirements.txt
+
+# Step 4:
+echo "Copying files to correct dir.. Make sure you ran this as root!"
+
+mkdir /usr/share/tf2-rich-presence
+mkdir /usr/share/tf2-rich-presence/src
+cp src/* /usr/share/tf2-rich-presence/src
+cp dist/linux/open_tf2_rich_presence.sh /usr/share/tf2-rich-presence
+cp README.md /usr/share/tf2-rich-presence/
+cp LICENSE /usr/share/tf2-rich-presence/
+
+chmod +x /usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
+
+# Step 4.5:
+echo "Adding steamdir to config.py..."
+echo -e "\nconsole_log_directory = \"$steamdir/steamapps/common/Team Fortress 2/tf/console.log\"" >> usr/share/config.py
+
+# Step 5:
+echo "Adding service to systemd.."
+cp dist/linux/tf2richpresence.service /etc/systemd/system/
+systemctl start tf2richpresence
+systemctl enable tf2richpresence

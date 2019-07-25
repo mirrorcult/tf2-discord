@@ -10,10 +10,10 @@ echo ""
 rem Steps:
 rem 1. Make sure user is using condebug
 rem 2. Get user's TF2 directory
-rem 3. Copy info about TF2 dir into config.py
-rem 4. Run 'pip install -r requirements.txt' 
-rem 5. Copy all necessary files to installation directory, based on OS (C:\Program Files (x86)\ or /usr/share)
-rem 6. Ensure that the program runs in background and runs on startup (pythonw for windows, nohup python & for linux)
+rem 3. Run 'pip install -r requirements.txt' 
+rem 4. Copy all necessary files to installation directory, based on OS (C:\Program Files (x86)\ or /usr/share)
+rem 4.5 Copy steamdir into config.py
+rem 5. Ensure that the program runs in background and runs on startup (pythonw for windows, nohup python & for linux)
 
 rem Step 1
 
@@ -45,9 +45,7 @@ goto continue_steamdir
 rem Step 3
 
 :continue_steamdir
-echo. >> "src\config.py"
-echo console_log_directory = "%steamdir%\steamapps\common\Team Fortress 2\tf\console.log" >> "src\config.py"
-echo.
+
 echo If you need to change your steam directory, change console_log_directory in C:\Program Files(x86)\tf2-rich-presence\config.py.
 echo.
 
@@ -60,10 +58,18 @@ echo.
 rem Step 5
 
 echo Creating new directory at C:\Program Files(x86)\tf2-rich-presence...
-mkdir Z:\Program Files (x86)\tf2-rich-presence
+mkdir "Z:\Program Files (x86)\tf2-rich-presence"
+mkdir "Z:\Program Files (x86)\tf2-rich-presence\src"
 
 echo Copying files over..
-xcopy /s src "Z:\Program Files (x86)\tf2-rich-presence\
+xcopy "src\main.py" "Z:\Program Files (x86)\tf2-rich-presence\src"
+xcopy "src\config.py" "Z:\Program Files (x86)\tf2-rich-presence\src"
 xcopy "dist\windows\open_tf2_rich_presence.bat" "Z:\Program Files (x86)\tf2-rich-presence\"
 xcopy "dist\windows\open_tf2_rich_presence.bat" "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup" 
+xcopy "README.md" "Z:\Program Files (x86)\tf2-rich-presence\"
+xcopy "LICENSE" "Z:\Program Files (x86)\tf2-rich-presence\"
 ren "Z:\Program Files (x86)\tf2-rich-presence\src\main.py" "main.pyw"
+
+echo. >> "Z:\Program Files (x86)\tf2-rich-presence\config.py"
+echo console_log_directory = "%steamdir%\steamapps\common\Team Fortress 2\tf\console.log" >> "Z:\Program Files (x86)\tf2-rich-presence\config.py"
+echo.
