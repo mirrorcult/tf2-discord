@@ -24,6 +24,7 @@ No hard feelings.
 To uninstall on windows:
 - Delete `C:\Program Files (x86)\tf2-rich-presence`
 - Remove `open_tf2_rich_presence.bat` from your startup folder at `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup` on modern Windows.
+
 To uninstall on linux:
 - Run `systemctl stop tf2-rich-presence && systemctl disable tf2-rich-presence && rm /etc/systemd/system/tf2-rich-presence.service` (be careful with those `rm`s!)
 - Delete `/usr/share/tf2-rich-presence`.
