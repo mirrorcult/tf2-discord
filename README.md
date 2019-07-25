@@ -15,16 +15,11 @@ in the background
 
 # **Installation**
 
-First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't
-already have them installed and do it there.
-
-Next, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
-Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
-
-Now, download this repository. You can do this by clicking "Clone or download" at the top. Save it anywhere, and unzip it.
-
-Next, depending on whether you're running Windows or Linux, run `install_windows.bat` (*AS ADMIN*) or `./install_linux.sh`. The installer will
-guide you through the process of installing TF2 Rich Presence.
+- First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't already have them installed and do it there.
+- Next, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
+- Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
+- Now, download this repository. You can do this by clicking "Clone or download" at the top. Save it anywhere, and unzip it.
+- Next, depending on whether you're running Windows or Linux, run `install_windows.bat` (*AS ADMIN*) or `./install_linux.sh`. The installer will guide you through the process of installing TF2 Rich Presence.
 
 ## **Uninstallation**
 
