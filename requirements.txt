@@ -1,0 +1,2 @@
+pypresence==3.3.2
+python-valve==0.2.1
