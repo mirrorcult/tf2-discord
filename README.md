@@ -48,7 +48,8 @@ my program parses the console.log for the IP and port of the server, asks the se
 
 ## Future Updates
 
-I'm planning on adding every map RGL is using for 6s/7s/HL to the image list, but certain ones like product, warmfrost, mge maps, ramjam, and vigil are supported
-already.
-
-For the actual code side of things, I'll probably refactor and document the code a little bit over time, and improve the CI/CD. I created this entire project in the span of like, 8 hours, so its not amazing.
+- Mac support will be added soon! All I really need is a Mac machine to test it on, or someone with one. If you're interested in helping me out with that, hit me up at `cyclowns#1440` on Discord.
+- Timestamps are coming very soon!
+- I might try and figure out a way to figure out what class you're playing, and display that as the small image rather than the TF2 logo.
+- I'm planning on adding every map RGL is using for 6s/7s/HL to the image list, but certain ones like product, warmfrost, mge maps, ramjam, and vigil are supported already.
+- For the actual code side of things, I'll probably refactor and document the code a little bit over time, and improve the CI/CD. I created this entire project in the span of like, 8 hours, so its not amazing.
