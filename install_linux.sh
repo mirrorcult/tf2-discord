@@ -69,10 +69,10 @@ chmod +x /usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
 
 # Step 4.5:
 echo "Adding steamdir to config.py..."
-echo -e "\nconsole_log_directory = \"$steamdir/steamapps/common/Team Fortress 2/tf/console.log\"" >> usr/share/config.py
+echo -e "\nconsole_log_directory = \"$steamdir/steamapps/common/Team Fortress 2/tf/console.log\"" >> /usr/share/tf2-rich-presence/config.py
 
 # Step 5:
-echo "Adding service to systemd.."
-cp dist/linux/tf2richpresence.service /etc/systemd/system/
-systemctl start tf2richpresence
-systemctl enable tf2richpresence
+# echo "Adding service to systemd.."
+# cp dist/linux/tf2richpresence.service /etc/systemd/system/
+# systemctl start tf2richpresence
+# systemctl enable tf2richpresence

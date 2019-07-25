@@ -8,6 +8,7 @@ from config import *
 from pypresence import Presence
 from valve.source.a2s import ServerQuerier
 from valve.source import NoResponseError
+import psutil
 import time
 import sys
 import re
@@ -19,6 +20,7 @@ ip_regex = r".+?(?=:)"
 port_regex = r":[0-9]+"
 current_cache = ""
 cache_fails = 0
+cleared_presence = False
 
 # check if console_log_path exists
 if not ('console_log_path' in globals() or 'console_log_path' in locals()):  # should be in config.py if installed correctly
@@ -27,6 +29,16 @@ if not ('console_log_path' in globals() or 'console_log_path' in locals()):  # s
 
 RPC = Presence(client_id)
 RPC.connect()
+
+# Does what it says on the tin.
+def is_tf2_running():
+    for proc in psutil.process_iter():
+        try:
+            if "hl2" in proc.name().lower() and "Team Fortress 2" in proc.exe():
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return False
 
 # Parses console.log file for ip and port
 def parse_console_log():
@@ -90,7 +102,15 @@ clear_console_log()
 
 # Main loop
 while True:
+    if not is_tf2_running():
+        if cleared_presence == False:
+            clear_console_log()
+            RPC.clear()
+            cleared_presence == True
+        time.sleep(30)
+        continue
     try:
+        cleared_presence = False
         (ip, port) = parse_console_log()
         if ip != "":
             clear_console_log()
