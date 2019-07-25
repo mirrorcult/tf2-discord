@@ -5,6 +5,9 @@ After=syslog.target network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
+ExecStart=/usr/bin/env python3 /usr/share/tf2-rich-presence/src/main.py
 Restart=on-failure
 RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

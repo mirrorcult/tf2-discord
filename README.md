@@ -8,14 +8,7 @@ RGL is using for 6s/7s/HL to the image list, but certain ones like product, warm
 
 ![main menu presence](https://i.imgur.com/u11GeXw.png) ![server presence](https://i.imgur.com/3ue7NPE.png) ![hoverover presence](https://i.imgur.com/LFkbgQJ.png)
 
-## Usage / How To Run
-
-TF2 Rich Presence, by default, will start itself on startup on whatever system you're running, unless you disable this.
-If it's not currently running, go to your installation directory (either `C:\Program Files (x86)\tf2-rich-presence` or `/usr/share/tf2-rich-presence`)
-and run either `open_tf2_rich_presence.bat` or `open_tf2_rich_presence.sh`, if you're running Windows or Linux respectively. This will run TF2 Rich Presence
-in the background.
-
-## Installation
+# **Installation**
 
 First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't
 already have them installed and do it there.
@@ -23,8 +16,17 @@ already have them installed and do it there.
 Next, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
 Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
 
-Next, depending on whether you're running Windows or Linux, run `install_windows.bat` (*AS ADMIN*) or `sudo ./install_linux.sh`. The installer will
+Now, download this repository. You can do this by clicking "Clone or download" at the top. Save it anywhere, and unzip it.
+
+Next, depending on whether you're running Windows or Linux, run `install_windows.bat` (*AS ADMIN*) or `./install_linux.sh`. The installer will
 guide you through the process of installing TF2 Rich Presence.
+
+## Usage / How To Run
+
+TF2 Rich Presence, by default, will start itself on startup on whatever system you're running, unless you disable this.
+If it's not currently running, go to your installation directory (either `C:\Program Files (x86)\tf2-rich-presence` or `/usr/share/tf2-rich-presence`)
+and run either `open_tf2_rich_presence.bat` or `open_tf2_rich_presence.sh`, if you're running Windows or Linux respectively. This will run TF2 Rich Presence
+in the background.
 
 ## Uninstallation
 
@@ -37,7 +39,7 @@ To uninstall on windows:
 
 To uninstall on linux:
 
-- Run `systemctl stop tf2-rich-presence && systemctl disable tf2-rich-presence && rm /etc/systemd/system/tf2-rich-presence.service` (be careful with those `rm`s!)
+- Run `systemctl --user stop tf2-rich-presence && systemctl --user disable tf2-rich-presence && rm /usr/lib/systemd/user/tf2-rich-presence.service` (be careful with those `rm`s!)
 - Delete `/usr/share/tf2-rich-presence`.
 
 ## Hows it Work?

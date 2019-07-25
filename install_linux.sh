@@ -58,21 +58,21 @@ pip install -r requirements.txt
 # Step 4:
 echo "Copying files to correct dir.. Make sure you ran this as root!"
 
-mkdir /usr/share/tf2-rich-presence
-mkdir /usr/share/tf2-rich-presence/src
-cp src/* /usr/share/tf2-rich-presence/src
-cp dist/linux/open_tf2_rich_presence.sh /usr/share/tf2-rich-presence
-cp README.md /usr/share/tf2-rich-presence/
-cp LICENSE /usr/share/tf2-rich-presence/
-
-chmod +x /usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
+sudo mkdir /usr/share/tf2-rich-presence
+sudo mkdir /usr/share/tf2-rich-presence/src
+sudo cp src/* /usr/share/tf2-rich-presence/src
+sudo cp README.md /usr/share/tf2-rich-presence/
+sudo cp LICENSE /usr/share/tf2-rich-presence/
 
 # Step 4.5:
 echo "Adding steamdir to config.py..."
-echo -e "\nconsole_log_directory = \"$steamdir/steamapps/common/Team Fortress 2/tf/console.log\"" >> /usr/share/tf2-rich-presence/config.py
+sudo chmod a+w /usr/share/tf2-rich-presence/src/config.py # since sudo echo doesnt work for some reason
+echo -e "\nconsole_log_path = \"$steamdir/steamapps/common/Team Fortress 2/tf/console.log\"" >> /usr/share/tf2-rich-presence/src/config.py
 
 # Step 5:
-# echo "Adding service to systemd.."
-# cp dist/linux/tf2richpresence.service /etc/systemd/system/
-# systemctl start tf2richpresence
-# systemctl enable tf2richpresence
+echo "Adding service to systemd.."
+sudo cp dist/linux/tf2richpresence.service /usr/lib/systemd/user 
+systemctl --user start tf2richpresence
+systemctl --user enable tf2richpresence
+
+echo -e "\nStarting tf2-rich-presence..."

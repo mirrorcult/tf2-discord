@@ -1,8 +1,4 @@
-# TODO: Get tf2-rich-presence running on Windows and Linux
-# TODO: Make sure connecting to server + querying information works
-# TODO: Make sure mapping the map name to an image in config.py works
-# TODO: Make sure updating RPC works
-# TODO: Make sure reading console.log file works (and that it works on Windows and Linux)
+#!/usr/bin/env python3
 
 from config import *
 from pypresence import Presence
