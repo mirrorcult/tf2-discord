@@ -127,4 +127,3 @@ maps = {
 		"arena_well": "well",
 		"cp_yukon": "yukon"
 }  
-console_log_path = "/media/Games/Steam/steamapps/common/Team Fortress 2/tf/console.log"
