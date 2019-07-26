@@ -56,7 +56,7 @@ echo "Make sure you have python3 and pip installed, if you didn't listen earlier
 pip install -r requirements.txt
 
 # Step 4:
-echo "Copying files to correct dir.. Make sure you ran this as root!"
+echo "Copying files to correct dir.. "
 
 sudo mkdir /usr/share/tf2-rich-presence
 sudo mkdir /usr/share/tf2-rich-presence/src
