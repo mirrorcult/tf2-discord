@@ -1,5 +1,7 @@
 ![logo](https://i.imgur.com/keDuc38.png)
 
+**WIP!!!!!!!**
+
 >A python script that provides a Discord Rich Presence description for TF2 servers. All vanilla maps are supported with images, and plenty of competitive ones are too! 
 
 [![pypresence](https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20)](https://github.com/qwertyquerty/pypresence) ![license](https://img.shields.io/github/license/cyclowns/tf2-rich-presence.svg?style=for-the-badge)
