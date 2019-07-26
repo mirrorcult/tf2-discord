@@ -1,5 +1,7 @@
 ![logo](https://i.imgur.com/keDuc38.png)
 
+**WIP!!!!!!!**
+
 >A python script that provides a Discord Rich Presence description for TF2 servers. All vanilla maps are supported with images, and plenty of competitive ones are too! 
 
 [![pypresence](https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20)](https://github.com/qwertyquerty/pypresence) ![license](https://img.shields.io/github/license/cyclowns/tf2-rich-presence.svg?style=for-the-badge)
@@ -15,16 +17,11 @@ in the background
 
 # **Installation**
 
-First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't
-already have them installed and do it there.
-
-Next, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
-Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
-
-Now, download this repository. You can do this by clicking "Clone or download" at the top. Save it anywhere, and unzip it.
-
-Next, depending on whether you're running Windows or Linux, run `install_windows.bat` (*AS ADMIN*) or `./install_linux.sh`. The installer will
-guide you through the process of installing TF2 Rich Presence.
+- First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't already have them installed and do it there.
+- Next, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
+- Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
+- Now, download this repository. You can do this by clicking "Clone or download" at the top. Save it anywhere, and unzip it.
+- Next, depending on whether you're running Windows or Linux, run `install_windows.bat` (*AS ADMIN*) or `./install_linux.sh`. The installer will guide you through the process of installing TF2 Rich Presence.
 
 ## **Uninstallation**
 
@@ -48,7 +45,8 @@ my program parses the console.log for the IP and port of the server, asks the se
 
 ## Future Updates
 
-I'm planning on adding every map RGL is using for 6s/7s/HL to the image list, but certain ones like product, warmfrost, mge maps, ramjam, and vigil are supported
-already.
-
-For the actual code side of things, I'll probably refactor and document the code a little bit over time, and improve the CI/CD. I created this entire project in the span of like, 8 hours, so its not amazing.
+- Mac support will be added soon! All I really need is a Mac machine to test it on, or someone with one. If you're interested in helping me out with that, hit me up at `cyclowns#1440` on Discord.
+- Timestamps are coming very soon!
+- I might try and figure out a way to figure out what class you're playing, and display that as the small image rather than the TF2 logo.
+- I'm planning on adding every map RGL is using for 6s/7s/HL to the image list, but certain ones like product, warmfrost, mge maps, ramjam, and vigil are supported already.
+- For the actual code side of things, I'll probably refactor and document the code a little bit over time, and improve the CI/CD. I created this entire project in the span of like, 8 hours, so its not amazing.
