@@ -1,8 +1,9 @@
 #!/bin/bash
 
-###################
-# Linux Installer #
-###################
+echo "-------------------"
+echo "- Linux Installer -"
+echo "-------------------"
+echo ""
 
 # Steps:
 # 1. Make sure user is running -condebug
