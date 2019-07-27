@@ -18,7 +18,17 @@ if not ('console_log_path' in globals() or 'console_log_path' in locals()):  # s
 def is_tf2_running():
     for proc in psutil.process_iter():
         try:
-            if "hl2" in proc.name().lower() and "Team Fortress 2" in proc.exe():
+            if "hl2" in proc.name().lower() and "Team Fortress 2" in proc.exe(): # just in case its hl2.exe from, like, actual HL2
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return False
+
+# Does what it says on the tin.
+def is_discord_running():
+    for proc in psutil.process_iter():
+        try:
+            if "discord" in proc.name().lower():
                 return True
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
@@ -35,7 +45,10 @@ class PresenceHandler:
         self.RPC = Presence(client_id)
         self.RPC.connect()
         self.cleared_presence = False
+        self.presence_loaded = False
         self.timestamp = int(time.time())
+        self.on_main_menu = False
+        self.in_queue = False
 
     def server_presence(self, info):
         details = info["server_name"]
@@ -59,6 +72,7 @@ class PresenceHandler:
         print(f'Updated presence for server {info["server_name"]}!')
 
     def main_menu_presence(self):
+        self.on_main_menu = True
         self.RPC.update(
             small_image="tf2button", 
             small_text="TF2 Rich Presence by cyclowns#1440", 
@@ -69,7 +83,15 @@ class PresenceHandler:
         )
 
     def queue_presence(self, type):
-        pass
+        self.in_queue = True
+        self.RPC.update(
+            small_image="tf2button",
+            small_text="TF2 Rich Presence by cyclowns#1440",
+            large_image="competitive",
+            large_text=f"Queueing for {type}",
+            details=f"Queueing for {type}",
+            start=self.timestamp
+        )
 
 class ParserHandler:
     def __init__(self):
@@ -94,10 +116,10 @@ class ParserHandler:
                     data.append((ip, port))
                     print(f'Found server {ip}:{port}!')
                     break
-                if line.startswith("casual thing"):
+                if line.startswith("[PartyClient] Entering queue for match group 12v12"):
                     data.append("casual")
                     break
-                if line.startswith("competitive thing"):
+                if line.startswith("[PartyClient] Entering queue for match group 6v6"):
                     data.append("competitive")
                     break
             return data
@@ -110,10 +132,13 @@ class ParserHandler:
     # cache has changed at all. If it hasn't, it ups a counter. (cache_fails)
     # If this counter reaches 5, then the game assumes you're on the main menu
     def cache_console_log(self):
-        to_cache = open(console_log_path, 'r').read()
+        f = open(console_log_path, 'r')
+        to_cache = f.read()
         if to_cache == self.current_cache: self.cache_fails += 1
         else: self.cache_fails = 0
         self.current_cache = to_cache
+        f.close()
+        
 
 class QueryHandler:
     def __init__(self):
@@ -125,25 +150,15 @@ class QueryHandler:
             print(f'Querying server {ip}:{port}')
             return server.info()            
 
-Query = QueryHandler()
-Parser = ParserHandler()
-DiscordPresence = PresenceHandler()
-
 # Main loop
-while True:
-    if not is_tf2_running():
-        if Parser.cleared_presence == False:
-            print("TF2 isn't running! Clearing RPC and console.log..")
-            Parser.clear_console_log()
-            DiscordPresence.RPC.clear()
-            Parser.cleared_presence == True
-        time.sleep(60)
-        continue
+def main_loop():
     try:
-        Parser.cleared_presence = False
+        DiscordPresence.cleared_presence = False
         data = Parser.parse_console_log()
         if data: # data[0] = type of data for RPC, essentially
             if data[0] == "server":
+                DiscordPresence.on_main_menu = False
+                DiscordPresence.in_queue = False
                 # new server!
                 (ip, port) = data[1]
                 Query.current_ip = ip
@@ -152,8 +167,11 @@ while True:
                 server_info = Query.query_server(ip, int(port))
                 DiscordPresence.server_presence(server_info)
             if data[0] == "casual" or data[0] == "competitive":
+                DiscordPresence.on_main_menu = False
                 print(f'In {data[0]} queue!')
-                DiscordPresence.timestamp = int(time.time())
+                if not DiscordPresence.in_queue:
+                    DiscordPresence.timestamp = int(time.time())
+                    DiscordPresence.in_queue = True
                 DiscordPresence.queue_presence(data[0])
         else:
             # if we have a current ip, then who cares, lets keep querying
@@ -161,14 +179,17 @@ while True:
                 server_info = Query.query_server(Query.current_ip, Query.current_port)
                 DiscordPresence.server_presence(server_info)
             else:
+                DiscordPresence.in_queue = False
                 print("On main menu!")
-                DiscordPresence.timestamp = int(time.time())
+                if not DiscordPresence.on_main_menu:
+                    DiscordPresence.on_main_menu = True
+                    DiscordPresence.timestamp = int(time.time())
                 DiscordPresence.main_menu_presence()
     except:
         print(f'Something messed up querying the server or updating RPC! Error: {sys.exc_info()[0]}')
 
     Parser.cache_console_log()
-    if Parser.cache_fails >= 3:
+    if Parser.cache_fails >= 3 and Query.current_ip != "":
         print("console.log hasn't changed in 5 cycles, resetting IP...")
         Query.current_ip = ""
         Query.current_port = ""
@@ -176,4 +197,44 @@ while True:
         Parser.cache_fails = 0
 
     Parser.clear_console_log()
+
+# Load stuff initially
+while True:
+    if is_discord_running():
+        print("Connected to RPC!")
+        # rpc might not still be running so lets just wait 10 seconds to be sure
+        time.sleep(10)
+        Query = QueryHandler()
+        Parser = ParserHandler()
+        DiscordPresence = PresenceHandler()
+        DiscordPresence.discord_running = True
+        break
+    print("Couldn't connect to RPC initially!")
     time.sleep(30)
+
+# Start of actual program
+while True:
+    discord = is_discord_running()
+    tf2 = is_tf2_running()
+    if not tf2:
+        if not DiscordPresence.cleared_presence:
+            print("TF2 isn't running! Clearing RPC and console.log..")
+            Parser.clear_console_log()
+            if discord:
+                DiscordPresence.RPC.clear()
+                DiscordPresence.cleared_presence = True
+            else:
+                print("Couldn't clear RPC!")
+        time.sleep(20)
+        continue
+    if not discord:
+        print("Discord isn't running!")
+        DiscordPresence.discord_running = False
+        time.sleep(20)
+        continue
+    if DiscordPresence.discord_running == False:
+        DiscordPresence.discord_running = True
+        DiscordPresence.RPC.connect()
+    main_loop()
+    time.sleep(20)
+    

@@ -71,8 +71,8 @@ echo -e "\nconsole_log_path = \"$steamdir/steamapps/common/Team Fortress 2/tf/co
 
 # Step 5:
 echo "Adding service to systemd.."
-sudo cp dist/linux/tf2richpresence.service /usr/lib/systemd/user 
-systemctl --user start tf2richpresence
+cp dist/linux/tf2richpresence.service ~/.config/systemd/user/
 systemctl --user enable tf2richpresence
+systemctl --user start tf2richpresence
 
 echo -e "\nStarting tf2-rich-presence..."

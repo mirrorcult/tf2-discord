@@ -1,10 +1,9 @@
 [Unit]
 Description=TF2 Rich Presence
-Wants=network.target
-After=syslog.target network-online.target
+After=multi-user.target
 
 [Service]
-Type=simple
+Type=idle
 ExecStart=/usr/bin/env python3 /usr/share/tf2-rich-presence/src/main.py
 Restart=on-failure
 RestartSec=10
