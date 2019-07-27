@@ -48,16 +48,34 @@ Now, follow the guide for your OS:
 - `tf2-discord` will now install itself to `/usr/share/tf2-rich-presence`, and add a `systemd` service called `tf2richpresence.service` that autostarts `tf2-discord` whenever you boot up.
 - You're free to delete the temporary folder you downloaded earlier worry-free. If you have questions or need help getting the program to run, feel free to contact me at `cyclowns#1440` on Discord. If you find any bugs or unexpected behavior, PLEASE post an issue report here on GitHub. I'll really appreciate it.
 
+## **Updating**
+
+Updating `tf2-discord` is fairly simple.
+
+`Windows:`
+
+- Redownload the newest version of `tf2-discord` using the same method you did installing it, and unzip it.
+- Run update_win.bat as administrator. !!(NOT CURRENTLY IMPLEMENTED)!!
+- Reenter your steam directory when prompted. If you don't know it, it's probably `C:\Program Files (x86)\Steam`--wherever TF2 is installed.
+- Your `tf2-discord` is now fully updated!
+
+`Linux:`
+
+- Redownload the newest version of `tf2-discord` using the same method you did installing it, unzip it, and `cd` in.
+- Run `chmod +x ./update_linux.sh` and then `./install_linux.sh`.
+- Reenter your steam directory when prompted. If you don't know it, it's probably `~/.local/share/Steam` or `~/.steam/steam`--wherever TF2 is installed.
+- Your `tf2-discord` is now fully updated!
+
 ## **Uninstallation**
 
 No hard feelings.
 
-To uninstall on windows:
+`Windows:`
 
 - Delete `C:\Program Files (x86)\tf2-rich-presence`
 - Remove `open_tf2_rich_presence.bat` from your startup folder at `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup` on modern Windows.
 
-To uninstall on linux:
+`Linux:`
 
 - Run `systemctl --user stop tf2richpresence && systemctl --user disable tf2rich-resence && rm ~/.config/systemd/user/tf2richpresence.service` (be careful with those `rm`s!)
 - Delete `/usr/share/tf2-rich-presence`.
