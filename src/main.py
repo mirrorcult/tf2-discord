@@ -138,7 +138,6 @@ class ParserHandler:
         else: self.cache_fails = 0
         self.current_cache = to_cache
         f.close()
-        
 
 class QueryHandler:
     def __init__(self):
@@ -223,6 +222,7 @@ while True:
             if discord:
                 DiscordPresence.RPC.clear()
                 DiscordPresence.cleared_presence = True
+                DiscordPresence.timestamp = time.time()
             else:
                 print("Couldn't clear RPC!")
         time.sleep(20)
