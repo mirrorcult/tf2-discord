@@ -59,7 +59,7 @@ To uninstall on windows:
 
 To uninstall on linux:
 
-- Run `systemctl --user stop tf2richpresence && systemctl --user disable tf2rich-resence && rm ~/.config/systemd/user/tf2richpresence.service` (be careful with those `rm`s!)
+- Run `systemctl --user stop tf2richpresence && systemctl --user disable tf2richpresence && rm ~/.config/systemd/user/tf2richpresence.service` (be careful with those `rm`s!)
 - Delete `/usr/share/tf2-rich-presence`.
 
 ## Hows it Work?
