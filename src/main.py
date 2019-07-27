@@ -188,7 +188,7 @@ def main_loop():
         print(f'Something messed up querying the server or updating RPC! Error: {sys.exc_info()[0]}')
 
     Parser.cache_console_log()
-    if Parser.cache_fails >= 3 and Query.current_ip != "":
+    if Parser.cache_fails >= 5 and Query.current_ip != "":
         print("console.log hasn't changed in 5 cycles, resetting IP...")
         Query.current_ip = ""
         Query.current_port = ""
@@ -222,7 +222,7 @@ while True:
             if discord:
                 DiscordPresence.RPC.clear()
                 DiscordPresence.cleared_presence = True
-                DiscordPresence.timestamp = time.time()
+                DiscordPresence.timestamp = int(time.time())
             else:
                 print("Couldn't clear RPC!")
         time.sleep(20)

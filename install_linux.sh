@@ -16,7 +16,7 @@ echo ""
 echo "**IMPORTANT**"
 echo "Before you go any further, go into your TF2 launch options by right clicking on TF2 in steam,"
 echo "going to Properties, and selecting Launch Options. From there, add the launch option '-condebug'"
-echo "This allows tf2-rich-presence to snoop your console output to tell when you've connected to a server"
+echo "This allows tf2-discord to snoop your console output to tell when you've connected to a server"
 echo "If you're concerned about this program looking at your console.log, remember that everything is open source"
 echo "and really all the program looks for is the server's IP that you're connecting to."
 echo ""
@@ -76,4 +76,4 @@ cp dist/linux/tf2richpresence.service ~/.config/systemd/user/
 systemctl --user enable tf2richpresence
 systemctl --user start tf2richpresence
 
-echo -e "\nStarting tf2-rich-presence..."
+echo -e "\nStarting tf2-discord..."
