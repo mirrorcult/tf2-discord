@@ -47,6 +47,8 @@ class PresenceHandler:
         self.cleared_presence = False
         self.presence_loaded = False
         self.timestamp = int(time.time())
+        self.discord_running = False
+        self.tf2_running = False
         self.on_main_menu = False
         self.in_queue = False
 
@@ -217,6 +219,7 @@ while True:
     tf2 = is_tf2_running()
     if not tf2:
         if not DiscordPresence.cleared_presence:
+            DiscordPresence.tf2_running = False
             print("TF2 isn't running! Clearing RPC and console.log..")
             Parser.clear_console_log()
             if discord:
@@ -235,6 +238,9 @@ while True:
     if DiscordPresence.discord_running == False:
         DiscordPresence.discord_running = True
         DiscordPresence.RPC.connect()
+    if DiscordPresence.tf2_running == False:
+        DiscordPresence.tf2_running = True
+        DiscordPresence.timestamp = int(time.time())
     main_loop()
     time.sleep(20)
     
