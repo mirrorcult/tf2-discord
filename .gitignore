@@ -1,2 +1,4 @@
 src/__pycache__
+dist/build
+dist/main.spec
 nohup.out

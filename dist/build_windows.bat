@@ -1,0 +1,1 @@
+pyinstaller ..\src\main.py --clean --noconsole -F --distpath windows

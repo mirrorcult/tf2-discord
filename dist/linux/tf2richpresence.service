@@ -1,0 +1,10 @@
+[Unit]
+Description=TF2 Rich Presence
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
+
+[Install]
+WantedBy=default.target
