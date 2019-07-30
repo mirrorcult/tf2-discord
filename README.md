@@ -22,7 +22,7 @@ Well, I'm glad you asked!
 
 This installation assumes you have working internet and a brain.
 
-- First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't already have them installed and do it there at [python.org](python.org/downloads/). **Make sure you specifically download `pip` with it and add both to your PATH**!!! Python is pretty great, and you should have it installed regardless. Most linux distros have python3 and pip preinstalled--and, honestly, if you're running Linux you probably know how to install
+- First, *MAKE SURE* you have `python3` (3.7 preferred) and `pip` installed and in your system PATH. Visit the python website if you don't already have them installed at [python.org](python.org/downloads/). **Make sure you specifically download `pip` with it and add both to your PATH**!!! Python is pretty great, and you should have it installed regardless. Most linux distros have python3 and pip preinstalled--and, honestly, if you're running Linux you probably know how to install
 Python.
 - Next, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
 - Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
