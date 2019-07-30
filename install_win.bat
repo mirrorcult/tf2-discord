@@ -54,7 +54,7 @@ echo.
 rem Step 4
 
 echo Make sure you have pip and python installed, by the way. Just saying that in case this errors so you know what the problem is.
-pip install -r %~dp0\requirements.txt
+pip install -r %~dp0requirements.txt
 echo. 
 
 rem Step 5
