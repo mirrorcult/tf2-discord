@@ -1,12 +1,10 @@
 [Unit]
 Description=TF2 Rich Presence
-After=multi-user.target
+After=default.target
 
 [Service]
-Type=idle
+Type=simple
 ExecStart=/usr/bin/env python3 /usr/share/tf2-rich-presence/src/main.py
-Restart=on-failure
-RestartSec=10
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
