@@ -11,19 +11,27 @@ import sys
 import re
 
 console_log_path = ""
-# check if console_log_path exists
-if len(sys.argv) == 2: 
-    if os.path.isfile(sys.argv[1] + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"):
-        console_log_path = sys.argv[1] + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"
-        print("Running Windows! Found console_log_path at " + console_log_path)
-    elif os.path.isfile(sys.argv[1] + "/steamapps/common/Team Fortress 2/tf/console.log"):
-        console_log_path = sys.argv[1] + "/steamapps/common/Team Fortress 2/tf/console.log"
-        print("Running Linux! Found console_log_path at " + console_log_path)
-    else:
-        print(f"That path ( {sys.argv[1]} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
-        sys.exit()
+# check if path.dat exists, if so read from it 
+if os.path.isfile("/usr/share/tf2-rich-presence/path.dat"):
+    with open("/usr/share/tf2-rich-presence/path.dat", "r") as file:
+        steampath = file.read().rstrip()
+        if os.path.isfile(steampath + "/steamapps/common/Team Fortress 2/tf/console.log"):
+            console_log_path = steampath + "/steamapps/common/Team Fortress 2/tf/console.log"
+            print("Running Linux! Found console_log_path at " + console_log_path)
+        else:
+            print(f"That path ( {steampath} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
+            sys.exit()
+elif os.path.isfile("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat"):
+    with open("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat", "r") as file:
+        steampath = file.read()
+        if os.path.isfile(steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"):
+            console_log_path = steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"
+            print("Running Windows! Found console_log_path at " + console_log_path)
+        else:
+            print(f"That path ( {steampath} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
+            sys.exit()
 else:
-    print("Command line arguments incorrect! Make sure to call tf2-discord with your Steam path as an argument.")
+    print("No path.dat file found!")
     sys.exit()
 
 # Does what it says on the tin.

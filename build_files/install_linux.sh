@@ -55,9 +55,8 @@ fi
 echo "Copying files to correct dir.. "
 
 sudo mkdir /usr/share/tf2-rich-presence/
-sudo cp ./* /usr/share/tf2-rich-presence/
+sudo cp -r ./* /usr/share/tf2-rich-presence/
 sudo rm /usr/share/tf2-rich-presence/tf2richpresence.service
-sudo chmod a+x /usr/share/tf2-rich-presence/open_tf2_rich_presence.sh
 
 # Step 4.5:
 echo "Adding steam directory to path.dat..."
@@ -67,7 +66,7 @@ echo $steamdir > /usr/share/tf2-rich-presence/path.dat
 
 # Step 5:
 echo "Adding service to systemd.."
-cp tf2richpresence.service ~/.config/systemd/user
+sudo cp tf2richpresence.service /usr/lib/systemd/user
 systemctl --user enable tf2richpresence
 systemctl --user start tf2richpresence
 
