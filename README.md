@@ -82,12 +82,11 @@ No hard feelings.
 
 ## Hows it Work?
 
-Basically, I found out about a nifty little debugging launch option called `-condebug`. This prints out the contents of your console to a file
-called console.log, in your `/tf` directory. More importantly, all the servers you connect to and their IPs are listed in this console.log. Essentially,
-my program parses the console.log for the IP and port of the server, asks the server you connected to its game data using [python-valve](https://github.com/serverstf/python-valve), and then displays the game data through [pypresence](https://github.com/qwertyquerty/pypresence), a wrapper around Discord Rich Presence.
+Basically, I found out about a nifty little debugging launch option called `-condebug`. This prints out the contents of your console to a file called console.log, in your `/tf` directory. More importantly, all the servers you connect to and their IPs are listed in this console.log. Essentially, my program parses the console.log for the IP and port of the server, asks the server you connected to for its game data using [python-valve](https://github.com/serverstf/python-valve), and then displays the game data through [pypresence](https://github.com/qwertyquerty/pypresence).
 
 ## Future Updates
 
+- Better installation (preferably not requiring Python to be installed at all) coming soon.
 - Mac support will be added soon! All I really need is a Mac machine to test it on, or someone with one. If you're interested in helping me out with that, hit me up at `cyclowns#1440` on Discord.
 - Timestamps are coming very soon!
 - I might try and figure out a way to figure out what class you're playing, and display that as the small image rather than the TF2 logo.
