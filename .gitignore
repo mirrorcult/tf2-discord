@@ -1,6 +1,6 @@
 src/__pycache__
 dist/build
-dist/build/linux
-dist/build/windows
+dist/linux
+dist/windows
 dist/main.spec
 nohup.out
