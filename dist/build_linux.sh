@@ -1,10 +1,10 @@
 mkdir linux
-cp ../build_files/install_linux.sh linux
-cp ../build_files/tf2richpresence.service linux
-cp ../build_files/uninstall_linux.sh linux
+cp ../build_files/linux/* linux
 
 cp ../LICENSE linux
 cp ../README.md linux
+
+sudo pip install ../requirements.txt
 
 pyinstaller ../src/main.py --clean --distpath linux
 mv linux/main linux/tf2-discord

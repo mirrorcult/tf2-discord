@@ -12,6 +12,8 @@ echo ""
 # 4. Copy steamdir into path.dat 
 # 5. Ensure that the program runs in background and runs on startup 
 
+# Step 1:
+
 echo "**IMPORTANT**"
 echo "Before you go any further, go into your TF2 launch options by right clicking on TF2 in steam,"
 echo "going to Properties, and selecting Launch Options. From there, add the launch option '-condebug'"
@@ -51,14 +53,13 @@ if [ ! steamdir_prompt == "y" ]; then
     fi
 fi
 
-# Step 4:
+# Step 3:
 echo "Copying files to correct dir.. "
-
 sudo mkdir /usr/share/tf2-rich-presence/
 sudo cp -r ./* /usr/share/tf2-rich-presence/
-sudo rm /usr/share/tf2-rich-presence/tf2richpresence.service
+sudo rm /usr/share/tf2-rich-presence/tf2richpresence.service # extra file and im lazy
 
-# Step 4.5:
+# Step 4:
 echo "Adding steam directory to path.dat..."
 sudo touch /usr/share/tf2-rich-presence/path.dat
 sudo chmod a+w /usr/share/tf2-rich-presence/path.dat # since sudo echo doesnt work for some reason
@@ -68,6 +69,6 @@ echo $steamdir > /usr/share/tf2-rich-presence/path.dat
 echo "Adding service to systemd.."
 sudo cp tf2richpresence.service /usr/lib/systemd/user
 systemctl --user enable tf2richpresence
-systemctl --user start tf2richpresence
 
 echo -e "\nStarting tf2-discord..."
+systemctl --user start tf2richpresence
