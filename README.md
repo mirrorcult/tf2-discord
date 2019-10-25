@@ -55,14 +55,14 @@ Updating `tf2-discord` is fairly simple.
 `Windows:`
 
 - Redownload the newest version of `tf2-discord` using the same method you did installing it, and unzip it.
-- Run update_win.bat as administrator. !!(NOT CURRENTLY IMPLEMENTED)!!
+- Run `uninstall_win.bat`, and then `install_win.bat` **both as administrator**.
 - Reenter your steam directory when prompted. If you don't know it, it's probably `C:\Program Files (x86)\Steam`--wherever TF2 is installed.
 - Your `tf2-discord` is now fully updated!
 
 `Linux:`
 
 - Redownload the newest version of `tf2-discord` using the same method you did installing it, unzip it, and `cd` in.
-- Run `chmod +x ./update_linux.sh` and then `./install_linux.sh`.
+- Run `uninstall_linux.sh` and then `./install_linux.sh`.
 - Reenter your steam directory when prompted. If you don't know it, it's probably `~/.local/share/Steam` or `~/.steam/steam`--wherever TF2 is installed.
 - Your `tf2-discord` is now fully updated!
 
@@ -77,8 +77,7 @@ No hard feelings.
 
 `Linux:`
 
-- Run `systemctl --user stop tf2richpresence && systemctl --user disable tf2richpresence && rm ~/.config/systemd/user/tf2richpresence.service` (be careful with those `rm`s!)
-- Delete `/usr/share/tf2-rich-presence`.
+- Run `/bin/bash /usr/share/tf2-rich-presence/uninstall_linux.sh`.
 
 ## Hows it Work?
 
