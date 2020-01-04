@@ -11,7 +11,7 @@ rem Steps:
 rem 1. Make sure user is using condebug
 rem 2. Get user's TF2 directory
 rem 3. Copy all necessary files to installation directory, based on OS (C:\Program Files (x86)\ or /usr/share)
-rem 4.  Copy steamdir into path.dat
+rem 4. Copy steamdir into path.dat
 rem 5. Ensure that the program runs in background and runs on startup 
 
 rem Step 1
@@ -44,37 +44,31 @@ goto continue_steamdir
 set "steamdir=C:\Program Files (x86)\Steam"
 goto continue_steamdir
 
-rem Step 3
-
 :continue_steamdir
 
-echo If you need to change your steam directory, change console_log_directory in C:\Program Files(x86)\tf2-rich-presence\config.py.
+echo If you need to change your steam directory, change console_log_directory in C:\Program Files(x86)\tf2-rich-presence\path.dat
 echo.
 
-rem Step 3 / 5
+rem Step 3
 
 echo Creating new directory at C:\Program Files (x86)\tf2-rich-presence...
 set "installpath=C:\Program Files (x86)\tf2-rich-presence"
+if exist %installpath% del %installpath%
 mkdir "%installpath%"
-mkdir "%installpath%\src"
 
 echo Copying files over..
-xcopy "%~dp0src\main.py" "%installpath%\src" /i
-xcopy "%~dp0src\config.py" "%installpath%\src" /i
-xcopy "%~dp0dist\windows\open_tf2_rich_presence.bat" "%installpath%"
-xcopy "%~dp0dist\windows\open_tf2_rich_presence.bat" "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup"
-xcopy "%~dp0README.md" "%installpath%"
-xcopy "%~dp0LICENSE" "%installpath%"
-ren "%installpath%\src\main.py" main.pyw
+xcopy "%~dp0*" "%installpath%\" /i /s
+xcopy "%~dp0open_tf2_rich_presence.bat" "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup"
 
 rem Step 4
 
 echo Copying steamdir into path.dat...
-echo. >> "%installpath%\src\config.py"
-echo console_log_path = "%steamdir%\steamapps\common\Team Fortress 2\\tf\console.log" >> "%installpath%\src\config.py"
+rem TODO check that this actually works
+echo console_log_path = "%steamdir%\steamapps\common\Team Fortress 2\tf\console.log" >> "%installpath%\path.dat"
 echo.
 
 echo TF2 Rich Presence is now installed and will run on startup!
 echo Starting TF2 Rich Presence...
+rem TODO replace this
 start pythonw "C:\Program Files (x86)\tf2-rich-presence\src\main.pyw"
 pause

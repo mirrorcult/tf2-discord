@@ -55,6 +55,7 @@ fi
 
 # Step 3:
 echo "Copying files to correct dir.. "
+if [ -d "/usr/share/tf2-rich-presence" ]; then rm -rf /usr/share/tf2-rich-presence; fi
 sudo mkdir /usr/share/tf2-rich-presence/
 sudo cp -r ./* /usr/share/tf2-rich-presence/
 sudo rm /usr/share/tf2-rich-presence/tf2richpresence.service # extra file and im lazy

@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 
+# TODO QOL
+#      Standardize names, I keep using tf2-rich-presence and tf2richpresence and tf2-discord interchangeably
+# TODO Windows
+#      Make sure install/uninstall/build scripts all work without a hitch
+#      Make sure the.. you know, actual script works
+#      Get Windows Services up and running for tf2-discord!
+# TODO Linux
+#      Get another tester to help out?
+# TODO Mac
+#      Do something about this eventually
+
 from config import *
 from pypresence import Presence
 from valve.source.a2s import ServerQuerier
@@ -132,8 +143,8 @@ class ParserHandler:
                 if line.startswith("Connecting to"):
                     line_stripped = re.sub(self.whitelist_regex, '', line)
                     ip = re.search(self.ip_regex, line_stripped).group(0)
-                    port_unstripped = re.search(self.port_regex, line_stripped).group(0) # first char is a : which we need to get rid of
-                    port = port_unstripped[1:]
+                    port_unstripped = re.search(self.port_regex, line_stripped).group(0) 
+                    port = port_unstripped[1:] # first char is a : which we need to get rid of
                     data.append("server")
                     data.append((ip, port))
                     print(f'Found server {ip}:{port}!')
@@ -165,11 +176,10 @@ class QueryHandler:
     def __init__(self):
         self.current_ip = ""
         self.current_port = ""
-    # Queries the server specified by ip and port and updates rich presence 
     def query_server(self, ip, port):
         with ServerQuerier((ip, int(port)), timeout=60) as server:
             print(f'Querying server {ip}:{port}')
-            return server.info()            
+            return server.info()
 
 # Main loop
 def main_loop():
@@ -219,7 +229,6 @@ def main_loop():
 
     Parser.clear_console_log()
 
-# Load stuff initially
 while True:
     if is_discord_running():
         print("Connected to RPC!")
@@ -233,7 +242,6 @@ while True:
     print("Couldn't connect to RPC initially!")
     time.sleep(30)
 
-# Start of actual program
 while True:
     discord = is_discord_running()
     tf2 = is_tf2_running()
