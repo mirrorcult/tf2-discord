@@ -53,22 +53,20 @@ rem Step 3
 
 echo Creating new directory at C:\Program Files (x86)\tf2-rich-presence...
 set "installpath=C:\Program Files (x86)\tf2-rich-presence"
-if exist %installpath% del %installpath%
 mkdir "%installpath%"
 
 echo Copying files over..
 xcopy "%~dp0*" "%installpath%\" /i /s
-xcopy "%~dp0open_tf2_rich_presence.bat" "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup"
 
 rem Step 4
 
 echo Copying steamdir into path.dat...
 rem TODO check that this actually works
-echo console_log_path = "%steamdir%\steamapps\common\Team Fortress 2\tf\console.log" >> "%installpath%\path.dat"
+echo %steamdir% >> "%installpath%\path.dat"
 echo.
 
+sc config tf2-discord binpath="cmd.exe /c %installpath%\tf2-discord\main.exe" type=own start=auto DisplayName="TF2 Discord"
 echo TF2 Rich Presence is now installed and will run on startup!
 echo Starting TF2 Rich Presence...
 rem TODO replace this
-start pythonw "C:\Program Files (x86)\tf2-rich-presence\src\main.pyw"
 pause

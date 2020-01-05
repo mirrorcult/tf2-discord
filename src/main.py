@@ -3,9 +3,10 @@
 # TODO QOL
 #      Standardize names, I keep using tf2-rich-presence and tf2richpresence and tf2-discord interchangeably
 # TODO Windows
-#      Make sure install/uninstall/build scripts all work without a hitch
+#      !! Make sure install/uninstall/build scripts all work without a hitch
 #      Make sure the.. you know, actual script works
 #      Get Windows Services up and running for tf2-discord!
+#      Use SRVANY
 # TODO Linux
 #      Get another tester to help out?
 # TODO Mac
@@ -34,7 +35,7 @@ if os.path.isfile("/usr/share/tf2-rich-presence/path.dat"):
             sys.exit()
 elif os.path.isfile("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat"):
     with open("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat", "r") as file:
-        steampath = file.read()
+        steampath = file.read().rstrip()
         if os.path.isfile(steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"):
             console_log_path = steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"
             print("Running Windows! Found console_log_path at " + console_log_path)
