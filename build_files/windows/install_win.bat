@@ -65,8 +65,9 @@ rem TODO check that this actually works
 echo %steamdir% >> "%installpath%\path.dat"
 echo.
 
-sc config tf2-discord binpath="cmd.exe /c %installpath%\tf2-discord\main.exe" type=own start=auto DisplayName="TF2 Discord"
+sc create tf2-discord binpath="cmd.exe /c %installpath%\tf2-discord\main.exe" type=own start=auto DisplayName="TF2 Discord"
 echo TF2 Rich Presence is now installed and will run on startup!
 echo Starting TF2 Rich Presence...
-rem TODO replace this
+net start tf2-discord
+
 pause
