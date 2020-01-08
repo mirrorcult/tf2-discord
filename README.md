@@ -24,11 +24,11 @@ This installation assumes you have working internet and a brain.
 
 - First, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
 - Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
-- Now, go into the 'Releases' tab at the top of this github page and download the latest release for whatever operating system you're running.
+- Now, click the button at the top of this github page that says ['releases'](https://github.com/cyclowns/tf2-discord/releases) and download the latest release for whatever operating system you're running.
 
 Now, follow the guide for your OS:
 
-`Windows:`
+### Windows
 
 - Note: `tf2-discord` is confirmed to work on Windows 8, 8.1, and 10. Anything lower is unconfirmed, but let me know if it works.
 - With the folder you downloaded unzipped anywhere open, right click on `install_windows.bat` and click `'Run as Administrator'`. It is very important that you run as admin, or copying files won't work.
@@ -37,7 +37,7 @@ Now, follow the guide for your OS:
 - You're free to delete the folder you downloaded earlier worry-free--all of the files `tf2-discord` needs are in `C:\Program Files (x86)\tf2-rich-presence`.
 - If you have questions or need help getting the program to run, feel free to contact me at `cyclowns#1440` on Discord. If you find any bugs or unexpected behavior, PLEASE post an issue report here on GitHub. I'll really appreciate it.
 
-`Linux:`
+### Linux
 
 - Note: `tf2-discord` is confirmed to work on Manjaro and Arch Linux. I'm 95% sure it'll work on Ubuntu, Debian, and Fedora too, so let me know if it does so I can add it here!
 - From here on out, I'm assuming you're in your terminal. If you're in a graphical file manager, the fact that you are running linux means you probably know what you're doing anyway.
@@ -50,14 +50,14 @@ Now, follow the guide for your OS:
 
 Updating `tf2-discord` is fairly simple.
 
-`Windows:`
+### Windows
 
 - Redownload the newest version of `tf2-discord` using the same method you did installing it, and unzip it.
 - Run `uninstall_win.bat`, and then `install_win.bat` **both as administrator**.
 - Reenter your steam directory when prompted. If you don't know it, it's probably `C:\Program Files (x86)\Steam`--wherever TF2 is installed.
 - Your `tf2-discord` is now fully updated!
 
-`Linux:`
+### Linux
 
 - Redownload the newest version of `tf2-discord` using the same method you did installing it, unzip it, and `cd` in.
 - Run `uninstall_linux.sh` and then `./install_linux.sh`.
@@ -68,11 +68,13 @@ Updating `tf2-discord` is fairly simple.
 
 No hard feelings.
 
-`Windows:`
+### Windows
 
 -  Run `C:\Program Files (x86)\tf2-rich-presence\uninstall_windows.bat` **as administrator**. If you don't have this file or don't know where to find it, you can download a release at the top of the page and it will be in there.
 
-`Linux:`
+If a bunch of errors pop up, then go into Task Manager and kill the process named 'main.exe'.
+
+### Linux
 
 - Run `/bin/bash /usr/share/tf2-rich-presence/uninstall_linux.sh`.
 
@@ -80,7 +82,7 @@ No hard feelings.
 
 If you don't trust my pre-packaged releases (fair enough), then you can build `tf2-discord` from source fairly easily.
 
-### Building for Linux
+### Linux
 
 Prerequisites: `python3.7+`, `pyinstaller` (you can get this using `pip install pyinstaller`
 
@@ -89,7 +91,7 @@ Prerequisites: `python3.7+`, `pyinstaller` (you can get this using `pip install 
 - If your prereqs are set up correctly, after a minute or two a directory called `linux` should appear, containing every file you need to run `tf2-discord`.
 - From here, you can install it yourself by following the installation directions above.
 
-### Building for Windows
+### Windows
 
 Prerequisites: `python3.7`, `pyinstaller` (you can get this using `pip install pyinstaller`)
 
