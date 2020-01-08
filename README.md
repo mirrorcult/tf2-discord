@@ -72,6 +72,8 @@ No hard feelings.
 
 -  Run `C:\Program Files (x86)\tf2-rich-presence\uninstall_windows.bat` **as administrator**. If you don't have this file or don't know where to find it, you can download a release at the top of the page and it will be in there.
 
+If a bunch of errors pop up, then go into Task Manager and kill the process named 'main.exe'.
+
 ### Linux
 
 - Run `/bin/bash /usr/share/tf2-rich-presence/uninstall_linux.sh`.
