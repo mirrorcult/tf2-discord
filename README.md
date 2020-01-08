@@ -24,7 +24,7 @@ This installation assumes you have working internet and a brain.
 
 - First, and **very importantly**, go into your TF2 Launch Options by right-clicking on Team Fortress 2 in Steam, going to Properties, and clicking Set Launch Options.
 - Then, add the launch option `-condebug`. This is integral to the program working, which is explained in `'Hows it Work?'` below.
-- Now, click the button at the top of this github page that says 'releases' and download the latest release for whatever operating system you're running.
+- Now, click the button at the top of this github page that says ['releases'](https://github.com/cyclowns/tf2-discord/releases) and download the latest release for whatever operating system you're running.
 
 Now, follow the guide for your OS:
 
