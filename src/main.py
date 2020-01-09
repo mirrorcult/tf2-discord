@@ -237,6 +237,7 @@ while True:
         time.sleep(10)
         Query = QueryHandler()
         Parser = ParserHandler()
+        Parser.clear_console_log()
         DiscordPresence = PresenceHandler()
         DiscordPresence.discord_running = True
         break
