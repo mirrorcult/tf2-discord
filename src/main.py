@@ -273,4 +273,4 @@ while True:
         DiscordPresence.timestamp = int(time.time())
     main_loop()
     time.sleep(20)
-    
+

@@ -28,14 +28,14 @@ could_find=0
 steamdir=""
 steamdir_prompt="n"
 
-if [ -d ~/.steam/steam ]; then
-    echo "Your steam games directory is assumed to be at ~/.steam/steam. Is this correct? [y/n] "
+if [ -d ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/ ]; then
+    echo "Your TF2 directory is assumed to be at ~/.steam/steam/steamapps/common/Team Fortress 2. Is this correct? [y/n] "
     read steamdir_prompt
     if [ $steamdir_prompt == "y" ]; then
         let steamdir="~/.steam/steam"
     fi
 else
-    if [ -d ~/.local/share/Steam ]; then
+    if [ -d ~/.local/share/Steam/steamapps/common/Team\ Fortress\ 2/ ]; then
         echo "Your steam games directory is assumed to be at ~/.local/share/steam. Is this correct? [y/n] "
         read steamdir_prompt
         if [ $steamdir_prompt == "y" ]; then
@@ -47,8 +47,8 @@ fi
 if [ ! steamdir_prompt == "y" ]; then
     echo "Could not find steam directory. Enter location of steam directory: "
     read steamdir
-    if [ ! -d $steamdir ]; then
-        echo "Not a valid directory."
+    if [ ! -d $steamdir/steamapps/common/Team\ Fortress\ 2/ ]; then
+        echo "Not a valid steam installation containing TF2."
         exit
     fi
 fi
