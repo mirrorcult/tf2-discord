@@ -3,10 +3,7 @@
 # TODO QOL
 #      Standardize names, I keep using tf2-rich-presence and tf2richpresence and tf2-discord interchangeably
 # TODO Windows
-#      !! Make sure install/uninstall/build scripts all work without a hitch
-#      Make sure the.. you know, actual script works
-#      Get Windows Services up and running for tf2-discord!
-#      Use SRVANY
+#      More testing
 # TODO Linux
 #      Get another tester to help out?
 # TODO Mac
@@ -82,7 +79,6 @@ class PresenceHandler:
         self.discord_running = False
         self.tf2_running = False
         self.on_main_menu = False
-        self.in_queue = False
 
     def server_presence(self, info):
         details = info["server_name"]
@@ -116,17 +112,6 @@ class PresenceHandler:
             start=self.timestamp
         )
 
-    def queue_presence(self, type):
-        self.in_queue = True
-        self.RPC.update(
-            small_image="tf2button",
-            small_text="TF2 Rich Presence by cyclowns#1440",
-            large_image="competitive",
-            large_text=f"Queueing for {type}",
-            details=f"Queueing for {type}",
-            start=self.timestamp
-        )
-
 class ParserHandler:
     def __init__(self):
         self.ip_regex = r".+?(?=:)"
@@ -149,12 +134,6 @@ class ParserHandler:
                     data.append("server")
                     data.append((ip, port))
                     print(f'Found server {ip}:{port}!')
-                    break
-                if line.startswith("[PartyClient] Entering queue for match group 12v12"):
-                    data.append("casual")
-                    break
-                if line.startswith("[PartyClient] Entering queue for match group 6v6"):
-                    data.append("competitive")
                     break
             return data
     # Clears console.log completely
@@ -190,7 +169,6 @@ def main_loop():
         if data: # data[0] = type of data for RPC, essentially
             if data[0] == "server":
                 DiscordPresence.on_main_menu = False
-                DiscordPresence.in_queue = False
                 # new server!
                 (ip, port) = data[1]
                 Query.current_ip = ip
@@ -198,20 +176,12 @@ def main_loop():
                 DiscordPresence.timestamp = int(time.time())
                 server_info = Query.query_server(ip, int(port))
                 DiscordPresence.server_presence(server_info)
-            if data[0] == "casual" or data[0] == "competitive":
-                DiscordPresence.on_main_menu = False
-                print(f'In {data[0]} queue!')
-                if not DiscordPresence.in_queue:
-                    DiscordPresence.timestamp = int(time.time())
-                    DiscordPresence.in_queue = True
-                DiscordPresence.queue_presence(data[0])
         else:
             # if we have a current ip, then who cares, lets keep querying
             if Query.current_ip != "" and Query.current_port != "":
                 server_info = Query.query_server(Query.current_ip, Query.current_port)
                 DiscordPresence.server_presence(server_info)
             else:
-                DiscordPresence.in_queue = False
                 print("On main menu!")
                 if not DiscordPresence.on_main_menu:
                     DiscordPresence.on_main_menu = True

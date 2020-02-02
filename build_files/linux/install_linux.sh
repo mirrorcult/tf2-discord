@@ -32,14 +32,14 @@ if [ -d ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/ ]; then
     echo "Your TF2 directory is assumed to be at ~/.steam/steam/steamapps/common/Team Fortress 2. Is this correct? [y/n] "
     read steamdir_prompt
     if [ $steamdir_prompt == "y" ]; then
-        let steamdir="~/.steam/steam"
+        let steamdir="$HOME/.steam/steam"
     fi
 else
     if [ -d ~/.local/share/Steam/steamapps/common/Team\ Fortress\ 2/ ]; then
         echo "Your steam games directory is assumed to be at ~/.local/share/steam. Is this correct? [y/n] "
         read steamdir_prompt
         if [ $steamdir_prompt == "y" ]; then
-            let steamdir="~/.local/share/steam"
+            let steamdir="$HOME/.local/share/steam"
         fi
     fi
 fi
