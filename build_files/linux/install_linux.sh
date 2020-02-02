@@ -44,7 +44,7 @@ else
     fi
 fi
 
-if [ ! steamdir_prompt == "y" ]; then
+if [ ! $steamdir_prompt == "y" ]; then
     echo "Could not find steam directory. Enter location of steam directory: "
     read steamdir
     if [ ! -d $steamdir/steamapps/common/Team\ Fortress\ 2/ ]; then
