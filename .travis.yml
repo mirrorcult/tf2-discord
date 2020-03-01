@@ -1,8 +1,24 @@
-dist: xenial
+os:
+- windows
+- linux
 language: python
 python:
-  - "3.7"
+- '3.7'
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script:
-  - pytest
+- cd dist
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./build_linux.sh; fi
+- if [ "$TRAVIS_OS_NAME" = "windows" ]; then ./build_windows.bat; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then 7z a tf2-discord-linux.zip linux; fi
+- if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a tf2-discord-windows.zip windows;
+  fi
+deploy:
+  provider: releases
+  api_key:
+    secure: XXljAeNtj4bD4E5N3NabfahDOZS5+AKdx6TbW6txR/qWlqkXYD6ZroAevtYUkij9kCwkFIEmoFEOhlcAubB/RdvfpNBYRUGyNazsnceCFSBpo2OwQZWS2b5usi9zOjEuOXI7xxdkoDMmuGW6MhINRLcRrjULiDIfAbpWUgcGiwz2uRetzM8Y323lByNaxg95ayEjB3n0PBfRpyJLLl478Av6HuSom+Ca81hPZUwAApviFF9TANgdgpiriBcP5W0RRfS/NNYOBxFOd0S2P08Gc8dOMDjUs+P5D7AF/PTjL4IU8ViCYmMm2gMrVuSqVCuJ38QAku5ROzNxhhkUKWrfCYYgLJPzimdchslumDwVVb7rjsCEudwC3A5u5eAwgbVgfrN+4NTMvYofbIyrqJhLZUCn7Ik6QhMEZ+woeU+lQLbstV0dJBVTdjtl1LlEXGYWkn1WZlbmrTK+rZw2dGyxe2/Ybl92HQj/32g1ER4jT41dHAv/PC4Zi94XRSHmeYAdiFGN/pNaG2dyqjAYhDKDm+uHNkeeGRykgPiOhmYSAF2lMIIZtXXqAgGbrJctusiK8tSvrNYE20FLx0TUNXvZ5Ifm/dw3uTk+HX4kcSWuldZRxTZNZLt0moSMqlQeo6ii5bnmVwjmnQN6t9cuPlZfLCHIz5s515/4RPVv6VbgGKY=
+  file: 
+    - dist/tf2-discord-linux.zip
+    - dist/tf2-discord-windows.zip
+  on:
+    repo: cyclowns/tf2-discord

@@ -18,6 +18,10 @@ Well, I'm glad you asked!
 - **It's pretty smart**, and can figure out whether you're in a party queue, a server, or on the main menu 90% of the time (there are some restrictions due to how this information is gathered, unfortunately)
 - It shows **lots of information**--including a map image, map name, server name, number of players and maximum players, a timestamp...
 
+### Disclaimer
+
+A tester on windows confirmed to that, apparently, tf2-discord can register as malware with some anti-virus suites. I tried to fix this, but everything that popped up seemed to confirm that it was an issue with pyinstaller that I didn't really have any way of fixing. If tf2-discord being detected as malware *at all* gives you some unease, I get it. On the other hand, if you've encountered this issue and know how to fix it, please tell me or submit a PR!
+
 # **Installation**
 
 This installation assumes you have working internet and a brain.
@@ -84,12 +88,12 @@ If you don't trust my pre-packaged releases (fair enough), then you can build `t
 
 ### Linux
 
-Prerequisites: `python3.7+`, `pyinstaller` (you can get this using `pip install pyinstaller`
+Prerequisites: `python3.7+`, `pyinstaller` (you can get this using `pip install pyinstaller`)
 
 - Clone this repository somewhere, and `cd` into it.
 - `cd` into the `dist` directory, and run `./build_linux.sh`
 - If your prereqs are set up correctly, after a minute or two a directory called `linux` should appear, containing every file you need to run `tf2-discord`.
-- From here, you can install it yourself by following the installation directions above.
+- From here, you can install it yourself by following the installation directions above, but for the `linux` directory you created.
 
 ### Windows
 
@@ -99,7 +103,7 @@ Prerequisites: `python3.7`, `pyinstaller` (you can get this using `pip install p
 - Unzip it anywhere, and open the `dist` directory.
 - Run `./build_windows.bat` as admin.
 - If your prereqs are set up correctly, after a minute or two a directory called `windows` should appear, containing every file you need to run `tf2-discord`.
-- From here, you can install it yourself by following the installation directions above.
+- From here, you can install it yourself by following the installation directions above, but for the `windows` directory you created.
 
 ## Hows it Work?
 
