@@ -20,6 +20,7 @@ if %errorLevel% == 0 (
     echo Success: Administrative permissions confirmed.
 ) else (
     echo Failure: Current permissions inadequate. Please run this program as administrator.
+	timeout /t 5
     exit /B
 )
 
@@ -34,19 +35,21 @@ echo If you're concerned about this program looking at your console.log, remembe
 echo and really all the program looks for is the server's IP that you're connecting to.
 echo **IMPORTANT**
 echo.
-echo Press any key to confirm you have read the text above:
-pause 
+
+pause
 
 rem Step 2
 
 if exist "C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2" (
-	echo Your Steam directory containing TF2 is assumed to be at C:\Program Files (x86)\Steam.
+	echo Your Steam directory containing TF2 is assumed to be at 'C:\Program Files ^(x86^)\Steam.'
 	:steamdir_prompt
 	set /P "promptcorrect=Is this correct (y/n)? "
 	if /I "%promptcorrect%" equ "n" goto steamdir_no
 	if /I "%promptcorrect%" equ "y" goto steamdir_yes
 	goto steamdir_prompt
 )
+
+goto steamdir_no
 
 :steamdir_no
 set /P "steamdir=What is your steam directory? "
@@ -82,7 +85,7 @@ xcopy "%~dp0*" "%installpath%\" /i /s
 rem Step 4
 
 echo Copying steamdir into path.dat...
-rem TODO check that this actually works
+
 echo %steamdir% >> "%installpath%\path.dat"
 echo.
 
