@@ -9,7 +9,7 @@ script:
 - cd dist
 - ./build_linux.sh
 - sudo apt-get -qq update
-- sudo-apt-get install -y p7zip-full
+- sudo apt-get install -y p7zip-full
 - 7z a tf2-discord-linux.zip linux
 deploy:
   provider: releases
