@@ -4,7 +4,7 @@ language: python
 python:
 - '3.7'
 install:
-- pip install -r requirements.txt
+- pip3 install -r requirements.txt
 script:
 - cd dist
 - ./build_linux.sh
@@ -19,3 +19,4 @@ deploy:
     - dist/tf2-discord-linux.zip
   on:
     repo: cyclowns/tf2-discord
+    tags: true
