@@ -103,6 +103,7 @@ Prerequisites: `python3.7`, `pyinstaller` (you can get this using `pip install p
 - Unzip it anywhere, and open the `dist` directory.
 - Run `./build_windows.bat` as admin.
 - If your prereqs are set up correctly, after a minute or two a directory called `windows` should appear, containing every file you need to run `tf2-discord`.
+  - If `pip` hangs, or it doesn't complete, try running `pip install -r requirements.txt` yourself and rerunning the script.
 - From here, you can install it yourself by following the installation directions above, but for the `windows` directory you created.
 
 ## Hows it Work?
