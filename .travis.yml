@@ -19,4 +19,4 @@ deploy:
     - dist/tf2-discord-linux.zip
   on:
     repo: cyclowns/tf2-discord
-    tags: true
+    tags: false
