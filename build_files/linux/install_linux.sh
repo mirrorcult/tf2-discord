@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "-------------------"
 echo "- Linux Installer -"
@@ -20,11 +20,10 @@ echo "going to Properties, and selecting Launch Options. From there, add the lau
 echo "This allows tf2-discord to snoop your console output to tell when you've connected to a server"
 echo "If you're concerned about this program looking at your console.log, remember that everything is open source"
 echo "and really all the program looks for is the server's IP that you're connecting to."
-echo ""
+read -n1 -rsp $"\nEnter any key to confirm that you have read the text above.\n"
 
 # Step 2:
 
-could_find=0
 steamdir=""
 steamdir_prompt="n"
 
@@ -36,7 +35,7 @@ if [ -d ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/ ]; then
     fi
 else
     if [ -d ~/.local/share/Steam/steamapps/common/Team\ Fortress\ 2/ ]; then
-        echo "Your steam games directory is assumed to be at ~/.local/share/steam. Is this correct? [y/n] "
+        echo "Your TF2 directory is assumed to be at ~/.local/share/Steam/steamapps/common/Team Fortress 2. Is this correct? [y/n] "
         read steamdir_prompt
         if [ $steamdir_prompt == "y" ]; then
             steamdir="$HOME/.local/share/steam"
@@ -48,13 +47,13 @@ if [ ! $steamdir_prompt == "y" ]; then
     echo "Could not find steam directory. Enter location of steam directory: "
     read steamdir
     if [ ! -d $steamdir/steamapps/common/Team\ Fortress\ 2/ ]; then
-        echo "Not a valid steam installation containing TF2."
+        echo "Not a valid steam installation containing TF2. Make sure you give the path to 'Steam', not 'steamapps' or 'common'"
         exit
     fi
 fi
 
 # Step 3:
-echo "Copying files to correct dir.. "
+echo -e "\nCopying files to correct dir.. "
 if [ -d "/usr/share/tf2-rich-presence" ]; then rm -rf /usr/share/tf2-rich-presence; fi
 sudo mkdir /usr/share/tf2-rich-presence/
 sudo cp -r ./* /usr/share/tf2-rich-presence/
@@ -71,5 +70,6 @@ echo "Adding service to systemd.."
 sudo cp tf2richpresence.service /usr/lib/systemd/user
 systemctl --user enable tf2richpresence
 
-echo -e "\nStarting tf2-discord..."
+echo -e "\ntf2-discord installed successfully!"
+echo "Starting tf2-discord..."
 systemctl --user start tf2richpresence

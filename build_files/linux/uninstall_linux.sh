@@ -2,7 +2,7 @@ echo "---------------------"
 echo "- Linux Uninstaller -"
 echo "---------------------"
 
-echo "Do you want to continue? [y/n]"
+echo "This will uninstall tf2-discord. Do you want to continue? [y/n] "
 read cont
 
 if [ $cont == "y" ]; then

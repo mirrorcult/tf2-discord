@@ -34,6 +34,8 @@ echo If you're concerned about this program looking at your console.log, remembe
 echo and really all the program looks for is the server's IP that you're connecting to.
 echo **IMPORTANT**
 echo.
+echo Press any key to confirm you have read the text above:
+pause 
 
 rem Step 2
 
@@ -58,7 +60,7 @@ goto continue_steamdir
 
 :continue_steamdir
 
-echo If you need to change your steam directory, C:\Program Files(x86)\tf2-rich-presence\path.dat to read the correct directory.
+echo If you need to change your steam directory, change C:\Program Files (x86)\tf2-rich-presence\path.dat to read the correct directory.
 echo.
 
 rem Step 3
