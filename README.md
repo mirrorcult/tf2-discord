@@ -15,7 +15,7 @@ Well, I'm glad you asked!
 - It's **easy to setup** and has a detailed installation/uninstallation/updating/building guide.
 - It has an **active developer**, fixing things and adding new features all the time.
 - It has image support for **every vanilla map in the game**, and plenty of mainstream competitive ones. It even has custom images for surf maps, jump maps, and MGE maps!
-- **It's pretty smart**, and can figure out whether you're in a party queue, a server, or on the main menu 90% of the time (there are some restrictions due to how this information is gathered, unfortunately)
+- **It's pretty smart**, and can figure out whether you're in a server or on the main menu 90% of the time (there are some restrictions due to how this information is gathered, unfortunately)
 - It shows **lots of information**--including a map image, map name, server name, number of players and maximum players, a timestamp...
 
 ### Disclaimer
