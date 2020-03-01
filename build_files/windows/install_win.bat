@@ -90,7 +90,7 @@ echo %steamdir% >> "%installpath%\path.dat"
 echo.
 
 if %errorlevel% == 0 (
-	schtasks /create /tn "TF2Discord" /sc onlogon /tr "%installpath%\tf2-discord\main.exe"
+	schtasks /create /tn "TF2Discord" /sc onlogon /tr "%installpath%\tf2-rich-presence\main.exe"
 	echo TF2 Rich Presence is now installed and will run on startup!
 	echo Running TF2 Rich Presence..
 	schtasks /run /tn "TF2Discord"
