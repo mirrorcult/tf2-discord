@@ -10,9 +10,10 @@ script:
 - cd dist
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./build_linux.sh; fi
 - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ./build_windows.bat; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
+  if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo-apt-get install -y p7zip-full; fi
 - if [ "$TRAVIS_OS_NAME" = "linux" ]; then 7z a tf2-discord-linux.zip linux; fi
-- if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a tf2-discord-windows.zip windows;
-  fi
+- if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a tf2-discord-windows.zip windows; fi
 deploy:
   provider: releases
   api_key:
