@@ -38,7 +38,7 @@ else
         echo "Your TF2 directory is assumed to be at ~/.local/share/Steam/steamapps/common/Team Fortress 2. Is this correct? [y/n] "
         read steamdir_prompt
         if [ $steamdir_prompt == "y" ]; then
-            steamdir="$HOME/.local/share/steam"
+            steamdir="$HOME/.local/share/Steam"
         fi
     fi
 fi
