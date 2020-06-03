@@ -74,6 +74,9 @@ if %errorlevel% neq 0 (
 	exit /B %errorlevel%
 )
 
+echo Overwriting console.log..
+echo tf2-discord installed! > "%steamdir%\steamapps\common\Team Fortress 2\tf\console.log"
+
 echo Creating new directory at C:\Program Files (x86)\tf2-rich-presence...
 set "installpath=C:\Program Files (x86)\tf2-rich-presence"
 rmdir /s /q "%installpath%"
