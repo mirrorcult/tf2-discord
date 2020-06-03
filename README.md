@@ -46,7 +46,7 @@ Now, follow the guide for your OS:
 - Note: `tf2-discord` is confirmed to work on Manjaro and Arch Linux. I'm 95% sure it'll work on Ubuntu, Debian, and Fedora too, so let me know if it does so I can add it here!
 - From here on out, I'm assuming you're in your terminal. If you're in a graphical file manager, the fact that you are running linux means you probably know what you're doing anyway.
 - With the folder you downloaded  unzipped, `cd` into it and run `./install_linux.sh` (not as root). If it doesn't run, you might need to do `chmod u+x install_linux.sh` first.
-- Now, the program will ask you for your Steam installation. Most of the time its either at `~/.steam/steam` or `~/.local/share/steam`, but if it isn't you can enter it here. Note: If you have multiple steam installs, **use the one with TF2 actually in it!!**
+- Now, the program will ask you for your Steam installation. Most of the time its either at `~/.steam/steam` or `~/.local/share/Steam`, but if it isn't you can enter it here. Note: If you have multiple steam installs, **use the one with TF2 actually in it!!**
 - `tf2-discord` will now install itself to `/usr/share/tf2-rich-presence`, and add a `systemd` service called `tf2richpresence.service` that autostarts `tf2-discord` whenever you boot up.
 - You're free to delete the temporary folder you downloaded earlier worry-free. If you have questions or need help getting the program to run, feel free to contact me at `cyclowns#1440` on Discord. If you find any bugs or unexpected behavior, PLEASE post an issue report here on GitHub. I'll really appreciate it.
 
