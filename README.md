@@ -1,6 +1,8 @@
 ![logo](https://i.imgur.com/keDuc38.png)
 
->A python script that provides a Discord Rich Presence description for Team Fortress 2. All vanilla maps are supported with images, and plenty of competitive ones are too! 
+(beta)
+
+>A python script that provides a Discord Rich Presence description for Team Fortress 2. All vanilla maps are supported with images, and plenty of competitive ones are too! Not currently finished, expect bugs.
 
 [![pypresence](https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20)](https://github.com/qwertyquerty/pypresence) ![license](https://img.shields.io/github/license/cyclowns/tf2-discord.svg?style=for-the-badge)
 
