@@ -5,3 +5,6 @@ dist/linux
 dist/windows
 dist/main.spec
 nohup.out
+
+*.dist
+*.build

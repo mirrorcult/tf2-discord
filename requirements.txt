@@ -1,4 +1,4 @@
 pypresence
 python-valve>=0.2.1
-pyinstaller>=3.6
+nuitka>=0.6.8.4
 psutil>=5.6.3
