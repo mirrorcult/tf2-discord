@@ -1,4 +1,5 @@
 src/__pycache__
+.pytest_cache
 dist/build
 dist/linux
 dist/windows
