@@ -6,7 +6,7 @@ cp ../README.md linux
 
 sudo pip install -r ../requirements.txt
 
-pyinstaller ../src/main.py --clean --distpath linux
+pyinstaller ../src/main.py --clean --onefile --distpath linux
 mv linux/main linux/tf2-discord
 
 rm -r build

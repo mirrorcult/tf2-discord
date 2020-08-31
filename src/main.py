@@ -122,7 +122,7 @@ class ParserHandler:
     # Parses console.log file for ip and port
     def parse_console_log(self):
         print("Parsing console.log..")
-        with open(console_log_path, 'r') as log:
+        with open(console_log_path, 'r', encoding='utf-8') as log:
             lines = log.readlines()
             data = []
             for line in lines:
@@ -145,7 +145,7 @@ class ParserHandler:
     # cache has changed at all. If it hasn't, it ups a counter. (cache_fails)
     # If this counter reaches 5, then the game assumes you're on the main menu
     def cache_console_log(self):
-        f = open(console_log_path, 'r')
+        f = open(console_log_path, 'r', encoding='utf-8')
         to_cache = f.read()
         if to_cache == self.current_cache: self.cache_fails += 1
         else: self.cache_fails = 0
