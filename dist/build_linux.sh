@@ -4,7 +4,7 @@ cp ../build_files/linux/* linux
 cp ../LICENSE linux
 cp ../README.md linux
 
-sudo pip install -r ../requirements.txt
+sudo pip install -r linux/requirements.txt
 
 pyinstaller ../src/main.py --clean --onefile --distpath linux
 mv linux/main linux/tf2-discord

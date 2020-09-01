@@ -1,4 +1,4 @@
 pypresence
 python-valve>=0.2.1
-nuitka>=0.6.8.4
+pynsist>=2.5.1
 psutil>=5.6.3

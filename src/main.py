@@ -1,60 +1,33 @@
 #!/usr/bin/env python3
 
-# TODO QOL
-#      Standardize names, I keep using tf2-rich-presence and tf2richpresence and tf2-discord interchangeably
-# TODO Windows
-#      More testing
-# TODO Linux
-#      Get another tester to help out?
-# TODO Mac
-#      Do something about this eventually
+# TODO: change to python log files
+# TODO: add error handling instead of just f uckin prints
+# TODO: refactor to be async (do this later i dont wanna do it now)
 
-from config import *
+from config import CLIENT_ID, MAPS
 from pypresence import Presence
 from valve.source.a2s import ServerQuerier
-from valve.source import NoResponseError
 import os.path
 import psutil
 import time
 import sys
 import re
 
-console_log_path = ""
-# check if path.dat exists, if so read from it 
-if os.path.isfile("/usr/share/tf2-rich-presence/path.dat"):
-    with open("/usr/share/tf2-rich-presence/path.dat", "r") as file:
-        steampath = file.read().rstrip()
-        if os.path.isfile(steampath + "/steamapps/common/Team Fortress 2/tf/console.log"):
-            console_log_path = steampath + "/steamapps/common/Team Fortress 2/tf/console.log"
-            print("Running Linux! Found console_log_path at " + console_log_path)
-        else:
-            print(f"That path ( {steampath} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
-            sys.exit()
-elif os.path.isfile("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat"):
-    with open("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat", "r") as file:
-        steampath = file.read().rstrip()
-        if os.path.isfile(steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"):
-            console_log_path = steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"
-            print("Running Windows! Found console_log_path at " + console_log_path)
-        else:
-            print(f"That path ( {steampath} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
-            sys.exit()
-else:
-    print("No path.dat file found!")
-    sys.exit()
 
-# Does what it says on the tin.
-def is_tf2_running():
+def tf2_running():
+    """Returns true if TF2 is currently running."""
     for proc in psutil.process_iter():
         try:
-            if "hl2" in proc.name().lower() and "Team Fortress 2" in proc.exe(): # just in case its hl2.exe from, like, actual HL2
+            # checking exe name just in case its like, actually HL2
+            if "hl2" in proc.name().lower() and "Team Fortress" in proc.exe():
                 return True
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
     return False
 
-# Does what it says on the tin.
-def is_discord_running():
+
+def discord_running():
+    """Returns True if Discord is currently running."""
     for proc in psutil.process_iter():
         try:
             if "discord" in proc.name().lower():
@@ -63,34 +36,49 @@ def is_discord_running():
             pass
     return False
 
-# Converts a name of a map (i.e. koth_viaduct) to its image value in the Rich Presence app (viaduct)
+
 def map_name_to_map_image(name):
-    for map_name, image in maps.items():
-        if map_name in name: return image 
+    """Converts a name of a map (i.e. koth_viaduct) to its image value
+    in the Rich Presence app (i.e viaduct)"""
+    for map_name, image in MAPS.items():
+        if map_name in name:
+            return image
     return "unknown"
+
+
+def query_server(ip, port):
+    """Queries a server with the given IP and port"""
+    with ServerQuerier((ip, int(port)), timeout=60) as server:
+        print(f'Querying server {ip}:{port}')
+        return server.info()
+
 
 class PresenceHandler:
     def __init__(self):
-        self.RPC = Presence(client_id)
+        self.RPC = Presence(CLIENT_ID)
         self.RPC.connect()
         self.cleared_presence = False
         self.presence_loaded = False
         self.timestamp = int(time.time())
-        self.discord_running = False
-        self.tf2_running = False
         self.on_main_menu = False
 
     def server_presence(self, info):
         details = info["server_name"]
         if details[0] == chr(1):
-            details = details.replace(chr(1), '') # sometimes server names will have a bunch of chars with code 1 at the beginning, so we remove them
+            # sometimes server names will have a bunch of
+            # chars with code 1 at the beginning, so we remove them
+            details = details.replace(chr(1), '')
         large_text = info["map"]
         large_image = map_name_to_map_image(info["map"])
-        if info["player_count"] == 0: party_size = (info["player_count"] + 1, info["max_players"]) # player_count can be off slightly, which messes with everything
-        else: party_size = (info["player_count"], info["max_players"])
+
+        # player_count can be off slightly, which messes with everything
+        if info["player_count"] == 0:
+            party_size = (info["player_count"] + 1, info["max_players"])
+        else:
+            party_size = (info["player_count"], info["max_players"])
 
         self.RPC.update(
-            small_image="tf2button", 
+            small_image="tf2button",
             small_text="TF2 Rich Presence by cyclowns#1440",
             large_image=large_image,
             large_text=large_text,
@@ -104,13 +92,14 @@ class PresenceHandler:
     def main_menu_presence(self):
         self.on_main_menu = True
         self.RPC.update(
-            small_image="tf2button", 
-            small_text="TF2 Rich Presence by cyclowns#1440", 
+            small_image="tf2button",
+            small_text="TF2 Rich Presence by cyclowns#1440",
             large_image="mainmenu",
             large_text="Main Menu",
             details="Main Menu",
             start=self.timestamp
         )
+
 
 class ParserHandler:
     def __init__(self):
@@ -119,128 +108,177 @@ class ParserHandler:
         self.whitelist_regex = r"[^0-9:.]+"
         self.current_cache = ""
         self.cache_fails = 0
-    # Parses console.log file for ip and port
+        self.console_log_path = self.get_console_log_path()
+
+    def get_console_log_path(self):
+        """Returns the path of the console.log file.
+        Errors if path.dat is not configured properly,
+        or console.log doesn't exist."""
+
+        if os.path.isfile("/usr/share/tf2-rich-presence/path.dat"):
+            with open("/usr/share/tf2-rich-presence/path.dat", "r") as file:
+                steampath = file.read().rstrip()
+                if os.path.isfile(steampath + "/steamapps/common/Team Fortress 2/tf/console.log"):
+                    return steampath + "/steamapps/common/Team Fortress 2/tf/console.log"
+                    # print("Running Linux! Found console_log_path at " + console_log_path)
+                else:
+                    # print(f"That path ( {steampath} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
+                    sys.exit()
+        elif os.path.isfile("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat"):
+            with open("C:\\Program Files (x86)\\tf2-rich-presence\\path.dat", "r") as file:
+                steampath = file.read().rstrip()
+                if os.path.isfile(steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"):
+                    return steampath + "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"
+                else:
+                    # print(f"That path ( {steampath} ) is not a valid path to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
+                    sys.exit()  # TODO THROW ERRORS
+        else:
+            # print("No path.dat file found!")
+            sys.exit()  # TODO THROW ERRORS
+
     def parse_console_log(self):
+        """Parses the console.log file and returns the IP and port
+        of the connected server, if found."""
+
         print("Parsing console.log..")
-        with open(console_log_path, 'r', encoding='utf-8') as log:
+        with open(self.console_log_path, 'r', encoding='utf-8') as log:
             lines = log.readlines()
             data = []
             for line in lines:
                 if line.startswith("Connecting to"):
                     line_stripped = re.sub(self.whitelist_regex, '', line)
                     ip = re.search(self.ip_regex, line_stripped).group(0)
-                    port_unstripped = re.search(self.port_regex, line_stripped).group(0) 
-                    port = port_unstripped[1:] # first char is a : which we need to get rid of
+                    port_unstripped = re.search(self.port_regex, line_stripped).group(0)
+                    # first char is a : which we need to get rid of
+                    port = port_unstripped[1:]
                     data.append("server")
                     data.append((ip, port))
                     print(f'Found server {ip}:{port}!')
                     break
             return data
-    # Clears console.log completely
-    def clear_console_log(self):
-        print("Cleared console.log!")
-        open(console_log_path, 'w').close()
 
-    # Caches the console.log file, and checks if the
-    # cache has changed at all. If it hasn't, it ups a counter. (cache_fails)
-    # If this counter reaches 5, then the game assumes you're on the main menu
+    def clear_console_log(self):
+        """Clears the content of the console.log file."""
+
+        print("Cleared console.log!")
+        open(self.console_log_path, 'w').close()
+
     def cache_console_log(self):
-        f = open(console_log_path, 'r', encoding='utf-8')
+        """Caches the console.log file, and checks if the cache has
+        changed at all. If it hasn't, it ups a counter (cache_fails).
+        If this counter reaches 5, the program assumes you're on
+        the main menu."""
+
+        f = open(self.console_log_path, 'r', encoding='utf-8')
         to_cache = f.read()
-        if to_cache == self.current_cache: self.cache_fails += 1
-        else: self.cache_fails = 0
+        if to_cache == self.current_cache:
+            self.cache_fails += 1
+        else:
+            self.cache_fails = 0
         self.current_cache = to_cache
         f.close()
 
-class QueryHandler:
+
+class TF2Discord:
     def __init__(self):
+        # set in run()
+        self.setup_rpc()
+        self.parser = ParserHandler()  # TODO check for exceptions here
+        self.parser.clear_console_log()
+
         self.current_ip = ""
         self.current_port = ""
-    def query_server(self, ip, port):
-        with ServerQuerier((ip, int(port)), timeout=60) as server:
-            print(f'Querying server {ip}:{port}')
-            return server.info()
 
-# Main loop
-def main_loop():
-    try:
-        DiscordPresence.cleared_presence = False
-        data = Parser.parse_console_log()
-        if data: # data[0] = type of data for RPC, essentially
-            if data[0] == "server":
-                DiscordPresence.on_main_menu = False
-                # new server!
-                (ip, port) = data[1]
-                Query.current_ip = ip
-                Query.current_port = int(port)
-                DiscordPresence.timestamp = int(time.time())
-                server_info = Query.query_server(ip, int(port))
-                DiscordPresence.server_presence(server_info)
+    def setup_rpc(self):
+        """Returns a valid PresenceHandler, after checking
+        if it can create one."""
+
+        if discord_running():
+            # rpc might not be running immediately
+            # so lets just wait 10 seconds to be sure
+            time.sleep(10)
+            print("Discord is up! Connecting to RPC..")
+            self.discord = PresenceHandler()  # TODO check for exceptions here
+            return
+        print("Couldn't connect to RPC initially! Trying again in 30 seconds.")
+        time.sleep(30)
+        self.setup_rpc()
+
+    def check_running(self):
+        """Checks if TF2 and Discord are running.
+        If either isn't, then sleep and check later.
+        If it's running now, then return control flow to run()."""
+
+        if not tf2_running():
+            if not self.discord.cleared_presence:
+                print("TF2 isn't running! Clearing RPC and console.log..")
+                self.parser.clear_console_log()
+                if discord_running():
+                    # Discord up, TF2 not running
+                    self.discord.RPC.clear()
+                    self.discord.cleared_presence = True
+                    self.discord.timestamp = int(time.time())
+                else:
+                    print("Couldn't clear RPC, discord not running!")
         else:
-            # if we have a current ip, then who cares, lets keep querying
-            if Query.current_ip != "" and Query.current_port != "":
-                server_info = Query.query_server(Query.current_ip, Query.current_port)
-                DiscordPresence.server_presence(server_info)
+            if not discord_running():
+                print("Discord isn't running!")  # TODO log.debug
             else:
-                print("On main menu!")
-                if not DiscordPresence.on_main_menu:
-                    DiscordPresence.on_main_menu = True
-                    DiscordPresence.timestamp = int(time.time())
-                DiscordPresence.main_menu_presence()
-    except:
-        print(f'Something messed up querying the server or updating RPC! Error: {sys.exc_info()[0]}')
+                print("Discord and TF2 are running!")  # TODO log.debug
+                return
 
-    Parser.cache_console_log()
-    if Parser.cache_fails >= 5 and Query.current_ip != "":
-        print("console.log hasn't changed in 5 cycles, resetting IP...")
-        Query.current_ip = ""
-        Query.current_port = ""
-        Query.timestamp = int(time.time())
-        Parser.cache_fails = 0
+        time.sleep(30)
+        self.check_running()
 
-    Parser.clear_console_log()
+    def run(self):
+        """Main program entry point."""
+        self.check_running()
 
-while True:
-    if is_discord_running():
-        print("Connected to RPC!")
-        # rpc might not still be running so lets just wait 10 seconds to be sure
-        time.sleep(10)
-        Query = QueryHandler()
-        Parser = ParserHandler()
-        Parser.clear_console_log()
-        DiscordPresence = PresenceHandler()
-        DiscordPresence.discord_running = True
-        break
-    print("Couldn't connect to RPC initially!")
-    time.sleep(30)
-
-while True:
-    discord = is_discord_running()
-    tf2 = is_tf2_running()
-    if not tf2:
-        if not DiscordPresence.cleared_presence:
-            DiscordPresence.tf2_running = False
-            print("TF2 isn't running! Clearing RPC and console.log..")
-            Parser.clear_console_log()
-            if discord:
-                DiscordPresence.RPC.clear()
-                DiscordPresence.cleared_presence = True
-                DiscordPresence.timestamp = int(time.time())
+        try:  # TODO what the fuck change this dude whats wrong with you
+            self.discord.cleared_presence = False
+            data = self.parser.parse_console_log()
+            if data:  # data[0] = type of data
+                if data[0] == "server":
+                    self.discord.on_main_menu = False
+                    # new server!
+                    (ip, port) = data[1]
+                    self.current_ip = ip
+                    self.current_port = int(port)
+                    self.discord.timestamp = int(time.time())
+                    server_info = query_server(ip, int(port))
+                    self.discord.server_presence(server_info)
             else:
-                print("Couldn't clear RPC!")
-        time.sleep(20)
-        continue
-    if not discord:
-        print("Discord isn't running!")
-        DiscordPresence.discord_running = False
-        time.sleep(20)
-        continue
-    if DiscordPresence.discord_running == False:
-        DiscordPresence.discord_running = True
-        DiscordPresence.RPC.connect()
-    if DiscordPresence.tf2_running == False:
-        DiscordPresence.tf2_running = True
-        DiscordPresence.timestamp = int(time.time())
-    main_loop()
-    time.sleep(20)
+                # if we have a current ip, then who cares, lets keep querying
+                if self.current_ip != "" and self.current_port != "":
+                    server_info = query_server(self.current_ip, self.current_port)
+                    self.discord.server_presence(server_info)
+                else:
+                    print("On main menu!")
+                    if not self.discord.on_main_menu:
+                        self.discord.timestamp = int(time.time())
+                    self.discord.main_menu_presence()
+        except:
+            print(f'Something messed up querying the server or updating RPC! Error: {sys.exc_info()[0]}')
 
+        self.parser.cache_console_log()
+        if self.parser.cache_fails >= 5 and self.current_ip != "":
+            print("console.log hasn't changed in 5 cycles, resetting IP...")
+            self.current_ip = ""
+            self.current_port = ""
+            self.discord.timestamp = int(time.time())
+            self.parser.cache_fails = 0
+        self.parser.clear_console_log()
+
+        time.sleep(30)
+        self.run()
+
+
+def tf2_discord():
+    """pynsist entry point."""
+    tf2d = TF2Discord()
+    tf2d.run()
+
+
+if __name__ == "__main__":
+    """pyinstaller ELF executable entry point."""
+    tf2_discord()

@@ -8,7 +8,7 @@ xcopy "%~dp0..\README.md" "%~dp0windows" /i
 
 pip install -r "%~dp0..\requirements.txt"
 
-pyinstaller %~dp0..\src\main.py --clean --noconsole --onefile --distpath %~dp0windows
+python -m pynsist %~dp0..\src\main.py --clean --noconsole --onefile --distpath %~dp0windows
 ren "%~dp0windows\main\" "tf2-discord"
 
 del %~dp0main.spec

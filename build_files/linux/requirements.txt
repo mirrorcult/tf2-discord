@@ -1,0 +1,4 @@
+pypresence
+python-valve>=0.2.1
+pyinstaller
+psutil>=5.6.3
