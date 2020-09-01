@@ -66,7 +66,7 @@ goto continue_steamdir
 echo If you need to change your steam directory, change C:\Program Files (x86)\tf2-rich-presence\path.dat to read the correct directory.
 echo.
 
-rem Step 3
+rem Step 3 -- with NSIS
 
 rem check for any errors first
 if %errorlevel% neq 0 (
