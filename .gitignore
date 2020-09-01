@@ -8,3 +8,6 @@ nohup.out
 
 *.dist
 *.build
+
+tf2discord.log
+.travis.yml
