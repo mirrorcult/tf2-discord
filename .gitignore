@@ -1,10 +1,8 @@
 src/__pycache__
 .pytest_cache
 dist/build
-dist/linux
-dist/windows
-dist/main.spec
-nohup.out
+dist/tf2disc-linux
+dist/tf2disc-windows
 
 *.dist
 *.build

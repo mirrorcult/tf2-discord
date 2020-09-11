@@ -1,13 +1,14 @@
 @echo off
 
-pip install -r "%~dp0..\build_files\windows\requirements.txt"
-
-rem need to copy every src file over because pynsist requires module names
-rem as the entrypoint, and doing that with our cur file system is dumb
-rem we'll just delete them after
+pip install -r requirements.txt
 
 xcopy ..\src\*.py .
-
-pynsist installer.cfg
-
+python setup.pyw build
 del *.py
+
+mkdir tf2disc-windows
+
+xcopy /E "build\exe.win32-3.6" tf2disc-windows
+xcopy /E "..\build_files\windows\*" tf2disc-windows
+xcopy ..\LICENSE tf2disc-windows
+xcopy ..\README.md tf2disc-windows
