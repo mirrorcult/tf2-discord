@@ -1,6 +1,5 @@
 import logging.config
 import os
-import sys
 import re
 
 from config import LOGGING_CONFIG

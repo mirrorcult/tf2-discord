@@ -32,6 +32,7 @@ class PresenceHandler:
         if details[0] == chr(1):
             # sometimes server names will have a bunch of
             # chars with code 1 at the beginning, so we remove them
+            # not sure why that is.
             details = details.replace(chr(1), "")
         large_text = info["map"]
         large_image = map_name_to_map_image(info["map"])

@@ -1,4 +1,4 @@
 pypresence
 python-valve>=0.2.1
-pynsist>=2.5.1
+cx_Freeze
 psutil>=5.6.3

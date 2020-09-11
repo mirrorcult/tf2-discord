@@ -8,7 +8,6 @@ from valve.source.a2s import ServerQuerier, NoResponseError
 import logging.config
 import psutil
 import time
-import sys
 
 from parsing import ConsoleLogParser
 from presence import PresenceHandler
@@ -46,7 +45,6 @@ def query_server(ip, port):
     try:
         with ServerQuerier((ip, int(port)), timeout=60) as server:
             log.info(f"Queried server {ip}:{port}!")
-            log.debug(f"Server info received from {ip}: {server.info()}")
             return server.info()
     except NoResponseError:
         log.error(f"No response received from {ip}!")
