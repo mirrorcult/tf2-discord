@@ -8,6 +8,7 @@ from valve.source.a2s import ServerQuerier, NoResponseError
 import logging.config
 import psutil
 import time
+import os
 
 from parsing import ConsoleLogParser
 from presence import PresenceHandler
@@ -142,13 +143,6 @@ class TF2Discord:
         time.sleep(30)
         self.run()
 
-
-def tf2_discord():
-    """pynsist entry point."""
+if __name__ == "__main__":
     tf2d = TF2Discord()
     tf2d.run()
-
-
-if __name__ == "__main__":
-    """pyinstaller ELF executable entry point."""
-    tf2_discord()

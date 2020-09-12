@@ -1,5 +1,7 @@
 import time
+import os
 import logging.config
+
 from pypresence import Presence
 
 from config import CLIENT_ID, MAPS, LOGGING_CONFIG

@@ -1,4 +1,11 @@
+import os
+
 CLIENT_ID = "451950787996680192"
+
+INSTALL_PATH_LINUX = "/usr/share/tf2-rich-presence"
+LOG_PATH_LINUX = "/var/log/tf2discord.log"
+INSTALL_PATH_WINDOWS = "C:\\Program Files (x86)\\tf2-rich-presence"
+LOG_PATH_WINDOWS = os.path.join(os.getenv('LOCALAPPDATA'), "tf2discord.log")
 
 MAPS = {
         "surf_": "surf",
@@ -128,6 +135,12 @@ MAPS = {
         "cp_yukon": "yukon"
 }
 
+log_path = ""
+if os.path.isdir(INSTALL_PATH_LINUX):
+    log_path = LOG_PATH_LINUX
+elif os.path.isdir(INSTALL_PATH_WINDOWS):
+    log_path = LOG_PATH_WINDOWS
+
 LOGGING_CONFIG = {
     "version": 1.0,
     "disable_existing_loggers": True,
@@ -148,7 +161,7 @@ LOGGING_CONFIG = {
             "level": "DEBUG",
             "formatter": "standard",
             "class": "logging.FileHandler",
-            "filename": "tf2discord.log",
+            "filename": log_path,
         }
     },
     "loggers": {

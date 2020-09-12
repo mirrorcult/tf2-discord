@@ -2,7 +2,7 @@ import logging.config
 import os
 import re
 
-from config import LOGGING_CONFIG
+from config import LOGGING_CONFIG, INSTALL_PATH_LINUX, INSTALL_PATH_WINDOWS
 from errors import NoPathFileError, InvalidConsoleLogPathError
 
 logging.config.dictConfig(LOGGING_CONFIG)
@@ -23,21 +23,19 @@ class ConsoleLogParser:
         Errors if path.dat is not configured properly,
         or console.log doesn't exist."""
 
-        DAT_PATH_LINUX = "/usr/share/tf2-rich-presence/path.dat"
-        DAT_PATH_WIN = "C:\\Program Files (x86)\\tf2-rich-presence\\path.dat"
         CL_PATH_LINUX = "/steamapps/common/Team Fortress 2/tf/console.log"
         CL_PATH_WIN = "\\steamapps\\common\\Team Fortress 2\\tf\\console.log"
 
-        if os.path.isfile(DAT_PATH_LINUX):
-            with open(DAT_PATH_LINUX, "r") as file:
+        if os.path.isfile(os.path.join(INSTALL_PATH_LINUX, "path.dat")):
+            with open(os.path.join(INSTALL_PATH_LINUX, "path.dat"), "r") as file:
                 steampath = file.read().rstrip()
                 if os.path.isfile(steampath + CL_PATH_LINUX):
                     log.info(f"Running Linux! Found console_log_path at {steampath + CL_PATH_LINUX}")
                     return steampath + CL_PATH_LINUX
                 else:
                     raise InvalidConsoleLogPathError(steampath, "Invalid path given. Either it does not refer to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
-        elif os.path.isfile(DAT_PATH_WIN):
-            with open(DAT_PATH_WIN, "r") as file:
+        elif os.path.isfile(os.path.join(INSTALL_PATH_WINDOWS, "path.dat")):
+            with open(os.path.join(INSTALL_PATH_WINDOWS, "path.dat"), "r") as file:
                 steampath = file.read().rstrip()
                 if os.path.isfile(steampath + CL_PATH_WIN):
                     log.info(f"Running Windows! Found console_log_path at {steampath + CL_PATH_WIN}")

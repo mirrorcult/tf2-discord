@@ -79,11 +79,11 @@ echo tf2-discord installed! > "%steamdir%\steamapps\common\Team Fortress 2\tf\co
 
 echo Creating new directory at C:\Program Files (x86)\tf2-rich-presence...
 set "installpath=C:\Program Files (x86)\tf2-rich-presence"
-rmdir /s /q "%installpath%"
+if exist %installpath%\ ( rmdir /s /q "%installpath%" )
 mkdir "%installpath%"
 
 echo Copying files over..
-xcopy "%~dp0*" "%installpath%\" /i /s
+xcopy "%~dp0*" "%installpath%\" /i /s > NUL
 
 rem Step 4
 
@@ -93,7 +93,7 @@ echo %steamdir% >> "%installpath%\path.dat"
 echo.
 
 if %errorlevel% == 0 (
-	schtasks /create /tn "TF2Discord" /sc onlogon /tr "C:\Program Files (x86)\tf2-rich-presence\main.exe"
+	schtasks /create /tn "TF2Discord" /sc onlogon /tr "C:\Program Files (x86)\tf2-rich-presence\tf2-discord.exe"
 	echo TF2 Rich Presence is now installed and will run on startup!
 	echo Running TF2 Rich Presence..
 	schtasks /run /tn "TF2Discord"
