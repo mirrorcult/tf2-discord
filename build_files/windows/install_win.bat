@@ -20,7 +20,7 @@ if %errorLevel% == 0 (
     echo Success: Administrative permissions confirmed.
 ) else (
     echo Failure: Current permissions inadequate. Please run this program as administrator.
-	timeout /t 5
+    timeout /t 5
     exit /B
 )
 
@@ -41,12 +41,12 @@ pause
 rem Step 2
 
 if exist "C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2" (
-	echo Your Steam directory containing TF2 is assumed to be at 'C:\Program Files ^(x86^)\Steam.'
-	:steamdir_prompt
-	set /P "promptcorrect=Is this correct (y/n)? "
-	if /I "%promptcorrect%" equ "n" goto steamdir_no
-	if /I "%promptcorrect%" equ "y" goto steamdir_yes
-	goto steamdir_prompt
+    echo Your Steam directory containing TF2 is assumed to be at 'C:\Program Files ^(x86^)\Steam.'
+    :steamdir_prompt
+    set /P "promptcorrect=Is this correct (y/n)? "
+    if /I "%promptcorrect%" equ "n" goto steamdir_no
+    if /I "%promptcorrect%" equ "y" goto steamdir_yes
+    goto steamdir_prompt
 )
 
 goto steamdir_no
@@ -70,8 +70,8 @@ rem Step 3 -- with NSIS
 
 rem check for any errors first
 if %errorlevel% neq 0 (
-	echo Found errors! Please make sure you followed the instructions carefully and correctly.
-	exit /B %errorlevel%
+    echo Found errors! Please make sure you followed the instructions carefully and correctly.
+    exit /B %errorlevel%
 )
 
 echo Overwriting console.log..
@@ -93,12 +93,12 @@ echo %steamdir% >> "%installpath%\path.dat"
 echo.
 
 if %errorlevel% == 0 (
-	schtasks /create /tn "TF2Discord" /sc onlogon /tr "C:\Program Files (x86)\tf2-rich-presence\tf2-discord.exe"
-	echo TF2 Rich Presence is now installed and will run on startup!
-	echo Running TF2 Rich Presence..
-	schtasks /run /tn "TF2Discord"
+    schtasks /create /tn "TF2Discord" /sc onlogon /tr "C:\Program Files (x86)\tf2-rich-presence\tf2-discord.exe"
+    echo TF2 Rich Presence is now installed and will run on startup!
+    echo Running TF2 Rich Presence..
+    schtasks /run /tn "TF2Discord"
 ) else (
-	echo Found errors installing! Please try running the uninstall script and then reinstalling.
+    echo Found errors installing! Please try running the uninstall script and then reinstalling.
 )
 
 pause

@@ -8,7 +8,6 @@ from valve.source.a2s import ServerQuerier, NoResponseError
 import logging.config
 import psutil
 import time
-import os
 
 from parsing import ConsoleLogParser
 from presence import PresenceHandler
@@ -25,7 +24,9 @@ def tf2_running():
             # checking exe name just in case its like, actually HL2
             if "hl2" in proc.name().lower() and "Team Fortress" in proc.exe():
                 return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        except (psutil.NoSuchProcess,
+                psutil.AccessDenied,
+                psutil.ZombieProcess):
             pass
     return False
 
@@ -36,7 +37,9 @@ def discord_running():
         try:
             if "discord" in proc.name().lower():
                 return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        except (psutil.NoSuchProcess,
+                psutil.AccessDenied,
+                psutil.ZombieProcess):
             pass
     return False
 
@@ -55,27 +58,12 @@ def query_server(ip, port):
 class TF2Discord:
     def __init__(self):
         # set in run()
-        self.setup_rpc()
+        self.discord = PresenceHandler()
         self.parser = ConsoleLogParser()  # TODO check for exceptions here
         self.parser.clear_console_log()
 
         self.current_ip = ""
         self.current_port = ""
-
-    def setup_rpc(self):
-        """Returns a valid PresenceHandler, after checking
-        if it can create one."""
-
-        if discord_running():
-            # rpc might not be running immediately
-            # so lets just wait 10 seconds to be sure
-            time.sleep(10)
-            log.info("Discord is up! Connecting to RPC..")
-            self.discord = PresenceHandler()  # TODO check for exceptions here
-            return
-        log.info("Couldn't connect to RPC initially! Trying again in 30 seconds.")
-        time.sleep(30)
-        self.setup_rpc()
 
     def check_running(self):
         """Checks if TF2 and Discord are running.
@@ -133,7 +121,8 @@ class TF2Discord:
 
         self.parser.cache_console_log()
         if self.parser.cache_fails >= 5 and self.current_ip != "":
-            log.info("Console.log hasn't changed in 5 cycles, resetting stored IP.")
+            log.info("Console.log hasn't changed in 5 cycles,\
+            resetting stored IP.")
             self.current_ip = ""
             self.current_port = ""
             self.discord.timestamp = int(time.time())
@@ -142,6 +131,7 @@ class TF2Discord:
 
         time.sleep(30)
         self.run()
+
 
 if __name__ == "__main__":
     tf2d = TF2Discord()

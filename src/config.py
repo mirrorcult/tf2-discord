@@ -141,6 +141,10 @@ if os.path.isdir(INSTALL_PATH_LINUX):
 elif os.path.isdir(INSTALL_PATH_WINDOWS):
     log_path = LOG_PATH_WINDOWS
 
+# truncate log path
+with open(log_path, 'w'):
+    pass
+
 LOGGING_CONFIG = {
     "version": 1.0,
     "disable_existing_loggers": True,

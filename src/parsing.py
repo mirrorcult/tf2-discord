@@ -43,7 +43,7 @@ class ConsoleLogParser:
                 else:
                     raise InvalidConsoleLogPathError(steampath, "Invalid path given. Either it does not refer to a Steam installation with TF2 in it, or you haven't added -condebug to your launch options.")
         else:
-            raise NoPathFileError(DAT_PATH_WIN, "No path.dat file could be located at the expected location")
+            raise NoPathFileError(os.path.join(INSTALL_PATH_WINDOWS, "path.dat"), "No path.dat file could be found at the expected location")
 
     def parse_console_log(self):
         """Parses the console.log file and returns the IP and port

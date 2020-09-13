@@ -1,8 +1,9 @@
 import time
-import os
+import sys
 import logging.config
 
 from pypresence import Presence
+from pypresence import exceptions
 
 from config import CLIENT_ID, MAPS, LOGGING_CONFIG
 
@@ -23,11 +24,24 @@ class PresenceHandler:
     """Handles changing and updating discord rich presence."""
     def __init__(self):
         self.RPC = Presence(CLIENT_ID)
-        self.RPC.connect()
+        self.attempt_connection()
         self.cleared_presence = False
         self.presence_loaded = False
         self.timestamp = int(time.time())
         self.on_main_menu = False
+
+    def attempt_connection(self):
+        """Attempts to connect to discord RPC. If discord isn't open, then
+        try again later."""
+        time.sleep(30)
+
+        try:
+            log.info("Connecting to RPC...")
+            self.RPC.connect()
+        except exceptions.InvalidPipe:
+            log.debug(sys.exc_info()[0])
+            log.warning("Couldn't connect to RPC! Trying again in 30 seconds.")
+            self.attempt_connection()
 
     def server_presence(self, info):
         details = info["server_name"]

@@ -5,7 +5,7 @@ if %errorLevel% == 0 (
     echo Success: Administrative permissions confirmed.
 ) else (
     echo Failure: Current permissions inadequate. Please run this program as administrator.
-	timeout /t 5
+    timeout /t 5
     exit /B
 )
 
