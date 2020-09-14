@@ -1,6 +1,5 @@
 @echo off
 
-
 if exist tf2disc-windows ( del /f /q /s tf2disc-windows\*.* > NUL && rmdir /q /s tf2disc-windows )
 
 pip install -r requirements.txt

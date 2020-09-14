@@ -38,7 +38,7 @@ class PresenceHandler:
         try:
             log.info("Connecting to RPC...")
             self.RPC.connect()
-        except exceptions.InvalidPipe:
+        except (exceptions.InvalidPipe, FileNotFoundError) as _:
             log.debug(sys.exc_info()[0])
             log.warning("Couldn't connect to RPC! Trying again in 30 seconds.")
             self.attempt_connection()

@@ -3,9 +3,7 @@ import os
 CLIENT_ID = "451950787996680192"
 
 INSTALL_PATH_LINUX = "/usr/share/tf2-rich-presence"
-LOG_PATH_LINUX = "/var/log/tf2discord.log"
 INSTALL_PATH_WINDOWS = "C:\\Program Files (x86)\\tf2-rich-presence"
-LOG_PATH_WINDOWS = os.path.join(os.getenv('LOCALAPPDATA'), "tf2discord.log")
 
 MAPS = {
         "surf_": "surf",
@@ -137,9 +135,9 @@ MAPS = {
 
 log_path = ""
 if os.path.isdir(INSTALL_PATH_LINUX):
-    log_path = LOG_PATH_LINUX
+    log_path = "/var/log/tf2discord/tf2discord.log"
 elif os.path.isdir(INSTALL_PATH_WINDOWS):
-    log_path = LOG_PATH_WINDOWS
+    log_path = os.path.join(os.getenv('LOCALAPPDATA'), "tf2discord.log")
 
 # truncate log path
 with open(log_path, 'w'):
