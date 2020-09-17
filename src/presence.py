@@ -63,7 +63,7 @@ class PresenceHandler:
 
         self.RPC.update(
             small_image="tf2button",
-            small_text="TF2 Rich Presence by cyclowns#1440",
+            small_text="TF2 Discord by cyclowns#1440",
             large_image=large_image,
             large_text=large_text,
             details=details,
@@ -77,7 +77,7 @@ class PresenceHandler:
         self.on_main_menu = True
         self.RPC.update(
             small_image="tf2button",
-            small_text="TF2 Rich Presence by cyclowns#1440",
+            small_text="TF2 Discord by cyclowns#1440",
             large_image="mainmenu",
             large_text="Main Menu",
             details="Main Menu",
