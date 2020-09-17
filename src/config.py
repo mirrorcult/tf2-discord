@@ -130,7 +130,30 @@ MAPS = {
         "cp_well": "well",
         "ctf_well": "well",
         "arena_well": "well",
-        "cp_yukon": "yukon"
+        "cp_yukon": "yukon",
+        # some other comp and c.tf maps next
+        "cp_glassworks": "glassworks",
+        "cp_kalinka": "kalinka",
+        "cp_rumble": "rumble",
+        "cp_stoneyridge": "stoneyridge",
+        "koth_ashville_rc2": "ashvillenight",
+        "koth_ashville_rc1_nb": "ashvillenight",
+        "koth_clearcut": "clearcut",
+        "koth_databank": "databank",
+        "koth_gibson": "gibson",
+        "koth_harter": "harter",
+        "koth_harvestalpine": "harvestalpine",
+        "koth_slaughter": "slaughter",
+        "koth_spillway": "spillway",
+        "koth_synthetic": "synthetic",
+        "pl_camber": "camber",
+        "pl_cashworks": "cashworks",
+        "pl_fifthcurve_rc": "fifthcurve",
+        "pl_fifthcurve_b": "fifthcurve",
+        "pl_sludgepit": "sludgepit",
+        "pl_stranded": "stranded",
+        "pl_summercoast": "summercoast",
+        "koth_bagel": "bagelfall"
 }
 
 log_path = ""
