@@ -1,6 +1,7 @@
 # sudo pip install -r requirements.txt
 rm -r tf2disc-linux
 
+cp ../assets/tf2discord.ico .
 cp -r ../src/*.py .
 python setup.pyw build
 rm *.py
@@ -13,3 +14,4 @@ cp ../LICENSE tf2disc-linux
 cp ../README.md tf2disc-linux
 
 rm -r build
+rm tf2discord.ico

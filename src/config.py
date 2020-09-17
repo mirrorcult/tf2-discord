@@ -139,7 +139,7 @@ if os.path.isdir(INSTALL_PATH_LINUX):
 elif os.path.isdir(INSTALL_PATH_WINDOWS):
     log_path = os.path.join(os.getenv('LOCALAPPDATA'), "tf2discord.log")
 
-# truncate log path
+# truncate log file
 with open(log_path, 'w'):
     pass
 
@@ -184,7 +184,7 @@ LOGGING_CONFIG = {
         },
         "tf2discord": {
             "handlers": ["console", "file"],
-            "level": "DEBUG",  # a little less important
+            "level": "DEBUG",
             "propagate": False,
         },
     }

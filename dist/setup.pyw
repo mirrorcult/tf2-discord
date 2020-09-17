@@ -17,4 +17,4 @@ setup(  name="tf2-discord",
         version="3.1.0",
         description="TF2 Rich Presence",
         options={"build_exe": build_exe_options},
-        executables=[Executable("main.py", base=base, targetName="tf2-discord")])
+        executables=[Executable("main.py", base=base, targetName="tf2-discord", icon="tf2discord.ico")])

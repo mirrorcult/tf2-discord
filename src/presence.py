@@ -37,8 +37,10 @@ class PresenceHandler:
 
         try:
             log.info("Connecting to RPC...")
+            # this throws like 20 different exceptions
+            # for 500 different reasons if discord isnt up
             self.RPC.connect()
-        except (exceptions.InvalidPipe, FileNotFoundError) as _:
+        except:  # so fuck it. bare except
             log.debug(sys.exc_info()[0])
             log.warning("Couldn't connect to RPC! Trying again in 30 seconds.")
             self.attempt_connection()
