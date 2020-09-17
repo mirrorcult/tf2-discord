@@ -4,7 +4,7 @@ After=default.target
 
 [Service]
 Type=simple
-ExecStart=/usr/share/tf2-rich-presence/main
+ExecStart=/usr/share/tf2-rich-presence/tf2-discord
 
 [Install]
 WantedBy=default.target

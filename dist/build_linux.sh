@@ -1,13 +1,17 @@
-mkdir linux
-cp ../build_files/linux/* linux
+# sudo pip install -r requirements.txt
+rm -r tf2disc-linux
 
-cp ../LICENSE linux
-cp ../README.md linux
+cp ../assets/tf2discord.ico .
+cp -r ../src/*.py .
+python setup.pyw build
+rm *.py
 
-sudo pip install -r ../requirements.txt
+mkdir tf2disc-linux
 
-pyinstaller ../src/main.py --clean --onefile --distpath linux
-mv linux/main linux/tf2-discord
+cp -r build/exe.linux-x86_64-3.8/* tf2disc-linux
+cp ../build_files/linux/* tf2disc-linux
+cp ../LICENSE tf2disc-linux
+cp ../README.md tf2disc-linux
 
 rm -r build
-rm main.spec
+rm tf2discord.ico

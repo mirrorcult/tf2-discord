@@ -20,7 +20,7 @@ echo "going to Properties, and selecting Launch Options. From there, add the lau
 echo "This allows tf2-discord to snoop your console output to tell when you've connected to a server"
 echo "If you're concerned about this program looking at your console.log, remember that everything is open source"
 echo "and really all the program looks for is the server's IP that you're connecting to."
-read -n1 -rsp $"\nEnter any key to confirm that you have read the text above.\n"
+read -n1 -rsp $"Enter any key to confirm that you have read the text above."
 
 # Step 2:
 
@@ -28,14 +28,14 @@ steamdir=""
 steamdir_prompt="n"
 
 if [ -d ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/ ]; then
-    echo "Your TF2 directory is assumed to be at ~/.steam/steam/steamapps/common/Team Fortress 2. Is this correct? [y/n] "
+    echo "Your steam directory is assumed to be at ~/.steam/steam. Is this correct? [y/n] "
     read steamdir_prompt
     if [ $steamdir_prompt == "y" ]; then
     	steamdir="$HOME/.steam/steam"
     fi
 else
     if [ -d ~/.local/share/Steam/steamapps/common/Team\ Fortress\ 2/ ]; then
-        echo "Your TF2 directory is assumed to be at ~/.local/share/Steam/steamapps/common/Team Fortress 2. Is this correct? [y/n] "
+        echo "Your steam directory is assumed to be at ~/.local/share/Steam. Is this correct? [y/n] "
         read steamdir_prompt
         if [ $steamdir_prompt == "y" ]; then
             steamdir="$HOME/.local/share/Steam"
@@ -64,6 +64,11 @@ echo "Adding steam directory to path.dat..."
 sudo touch /usr/share/tf2-rich-presence/path.dat
 sudo chmod a+w /usr/share/tf2-rich-presence/path.dat # since sudo echo doesnt work for some reason
 echo $steamdir > /usr/share/tf2-rich-presence/path.dat
+
+# Step 4.5:
+echo Creating log directory..
+sudo mkdir /var/log/tf2discord
+sudo chmod a+w /var/log/tf2discord
 
 # Step 5:
 echo "Adding service to systemd.."

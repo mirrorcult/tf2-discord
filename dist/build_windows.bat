@@ -1,14 +1,21 @@
 @echo off
 
-if exist %~dp0windows rmdir %~dp0windows
-mkdir %~dp0windows
-xcopy "%~dp0..\build_files\windows\*" "%~dp0windows" /i
-xcopy "%~dp0..\LICENSE" "%~dp0windows" /i
-xcopy "%~dp0..\README.md" "%~dp0windows" /i
+if exist tf2disc-windows ( del /f /q /s tf2disc-windows\*.* > NUL && rmdir /q /s tf2disc-windows )
 
-pip install -r "%~dp0..\requirements.txt"
+pip install -r requirements.txt
 
-pyinstaller %~dp0..\src\main.py --clean --noconsole --onefile --distpath %~dp0windows
-ren "%~dp0windows\main\" "tf2-discord"
+xcopy ..\src\*.py .
+xcopy ..\assets\tf2discord.ico .
+python setup.pyw build
+del *.py
 
-del %~dp0main.spec
+mkdir tf2disc-windows
+
+xcopy /E "build\exe.win32-3.6" tf2disc-windows
+xcopy /E "..\build_files\windows\*" tf2disc-windows
+xcopy ..\LICENSE tf2disc-windows
+xcopy ..\README.md tf2disc-windows
+
+del /f /q /s build\*.* > NUL
+rmdir /q /s build
+del tf2discord.ico
