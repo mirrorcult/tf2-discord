@@ -18,6 +18,8 @@ echo Copying files over..
 xcopy "%~dp0*" "%installpath%\" /i /s /Y > NUL
 
 echo Restarting process..
+schtasks /delete /tn "TF2Discord"
+schtasks /create /tn "TF2Discord" /sc onlogon /tr "C:\Program Files (x86)\tf2-rich-presence\tf2-discord.exe"
 schtasks /run /tn "TF2Discord"
 
 echo Complete!

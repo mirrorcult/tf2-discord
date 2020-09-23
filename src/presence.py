@@ -2,8 +2,7 @@ import time
 import sys
 import logging.config
 
-from pypresence import Presence
-from pypresence import exceptions
+from pypresence import Presence, exceptions
 
 from config import CLIENT_ID, MAPS, LOGGING_CONFIG
 
@@ -26,7 +25,6 @@ class PresenceHandler:
         self.RPC = Presence(CLIENT_ID)
         self.attempt_connection()
         self.cleared_presence = False
-        self.presence_loaded = False
         self.timestamp = int(time.time())
         self.on_main_menu = False
 
@@ -44,6 +42,7 @@ class PresenceHandler:
             log.debug(sys.exc_info()[0])
             log.warning("Couldn't connect to RPC! Trying again in 30 seconds.")
             self.attempt_connection()
+        log.info("Connected to RPC!")
 
     def server_presence(self, info):
         details = info["server_name"]
@@ -61,26 +60,32 @@ class PresenceHandler:
         else:
             party_size = (info["player_count"], info["max_players"])
 
-        self.RPC.update(
-            small_image="tf2button",
-            small_text="TF2 Discord by cyclowns#1440",
-            large_image=large_image,
-            large_text=large_text,
-            details=details,
-            state="Playing",
-            party_size=party_size,
-            start=self.timestamp
-        )
-        log.info(f'Updated presence for server {info["server_name"]}!')
+        try:
+            self.RPC.update(
+                small_image="tf2button",
+                small_text="TF2 Discord by cyclowns#1440",
+                large_image=large_image,
+                large_text=large_text,
+                details=details,
+                state="Playing",
+                party_size=party_size,
+                start=self.timestamp
+            )
+            log.info(f'Updated presence for server {info["server_name"]}!')
+        except exceptions.InvalidID:
+            log.error("Couldn't update server presence, RPC not connected / messed up for some reason!")
 
     def main_menu_presence(self):
         self.on_main_menu = True
-        self.RPC.update(
-            small_image="tf2button",
-            small_text="TF2 Discord by cyclowns#1440",
-            large_image="mainmenu",
-            large_text="Main Menu",
-            details="Main Menu",
-            start=self.timestamp
-        )
-        log.info("Updated presence to main menu!")
+        try:
+            self.RPC.update(
+                small_image="tf2button",
+                small_text="TF2 Discord by cyclowns#1440",
+                large_image="mainmenu",
+                large_text="Main Menu",
+                details="Main Menu",
+                start=self.timestamp
+            )
+            log.info("Updated presence to main menu!")
+        except exceptions.InvalidID:
+            log.error("Couldn't update menu presence, RPC not connected / messed up for some reason!")

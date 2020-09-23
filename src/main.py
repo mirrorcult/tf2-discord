@@ -5,6 +5,7 @@
 # TODO: refactor to be async (do this later i dont wanna do it now)
 
 from valve.source.a2s import ServerQuerier, NoResponseError
+from socket import gaierror
 import logging.config
 import psutil
 import time
@@ -52,6 +53,9 @@ def query_server(ip, port):
             return server.info()
     except NoResponseError:
         log.error(f"No response received from {ip}!")
+        return None
+    except gaierror:
+        log.error(f"Couldn't get server info from {ip}!")
         return None
 
 
