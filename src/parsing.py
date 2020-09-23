@@ -1,5 +1,6 @@
 import logging.config
 import os
+import codecs
 import re
 
 from config import LOGGING_CONFIG, INSTALL_PATH_LINUX, INSTALL_PATH_WINDOWS
@@ -50,7 +51,7 @@ class ConsoleLogParser:
         of the connected server, if found."""
 
         log.debug("Parsing console.log..")
-        with open(self.console_log_path, "r", encoding="utf-8") as clog:
+        with codecs.open(self.console_log_path, "r", encoding="utf-8", errors="ignore") as clog:
             lines = clog.readlines()
             data = []
             for line in lines:
@@ -78,7 +79,7 @@ class ConsoleLogParser:
         If this counter reaches 5, the program assumes you're on
         the main menu."""
 
-        f = open(self.console_log_path, "r", encoding="utf-8")
+        f = codecs.open(self.console_log_path, "r", encoding="utf-8", errors="ignore")
         to_cache = f.read()
         if to_cache == self.current_cache:
             self.cache_fails += 1
