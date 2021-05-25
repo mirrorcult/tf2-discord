@@ -1,24 +1,21 @@
 #!/usr/bin/env python3
 
-# TODO: change to python log files
-# TODO: add error handling instead of just f uckin prints
-# TODO: refactor to be async (do this later i dont wanna do it now)
-
 from valve.source.a2s import ServerQuerier, NoResponseError
 from socket import gaierror
 import logging.config
 import psutil
+import asyncio
 import time
 
 from parsing import ConsoleLogParser
 from presence import PresenceHandler
-from config import LOGGING_CONFIG
+from config import LOGGING_CONFIG, LOGGING_PATH, INSTALL_PATH
 
 logging.config.dictConfig(LOGGING_CONFIG)
 log = logging.getLogger("tf2discord")
 
 
-def tf2_running():
+async def tf2_running():
     """Returns true if TF2 is currently running."""
     for proc in psutil.process_iter():
         try:
@@ -32,7 +29,7 @@ def tf2_running():
     return False
 
 
-def discord_running():
+async def discord_running():
     """Returns True if Discord is currently running."""
     for proc in psutil.process_iter():
         try:
@@ -45,7 +42,7 @@ def discord_running():
     return False
 
 
-def query_server(ip, port):
+async def query_server(ip, port):
     """Queries a server with the given IP and port"""
     try:
         with ServerQuerier((ip, int(port)), timeout=60) as server:
@@ -69,12 +66,12 @@ class TF2Discord:
         self.current_ip = ""
         self.current_port = ""
 
-    def check_running(self):
+    async def check_running(self):
         """Checks if TF2 and Discord are running.
         If either isn't, then sleep and check later.
         If it's running now, then return control flow to run()."""
 
-        if not tf2_running():
+        if not await tf2_running():
             if not self.discord.cleared_presence:
                 log.info("TF2 isn't running! Clearing RPC and console.log..")
                 self.parser.clear_console_log()
@@ -95,7 +92,7 @@ class TF2Discord:
         time.sleep(30)
         self.check_running()
 
-    def run(self):
+    async def run(self):
         """Main program entry point."""
         self.check_running()
 
@@ -138,5 +135,8 @@ class TF2Discord:
 
 
 if __name__ == "__main__":
+    # truncate logfile
+    with open(LOGGING_PATH, "w") as f:
+        pass
     tf2d = TF2Discord()
-    tf2d.run()
+    asyncio.run(tf2d.run())
