@@ -31,7 +31,6 @@ class PresenceHandler:
     def attempt_connection(self):
         """Attempts to connect to discord RPC. If discord isn't open, then
         try again later."""
-        time.sleep(30)
 
         try:
             log.info("Connecting to RPC...")

@@ -1,9 +1,19 @@
 import os
+import sys
+import platform
 
 CLIENT_ID = "451950787996680192"
 
-INSTALL_PATH_LINUX = "/usr/share/tf2-rich-presence"
-INSTALL_PATH_WINDOWS = "C:\\Program Files (x86)\\tf2-rich-presence"
+s = platform.system()
+INSTALL_PATH = ""
+if s == "Linux":
+    INSTALL_PATH = os.path.join(os.getenv("HOME"), ".local", "share", "tf2-discord")
+elif s == "Windows":
+    INSTALL_PATH = os.path.join(os.getenv("LOCALAPPDATA"), "tf2-discord")
+elif s == "Darwin":
+    print("tf2-discord does not support MacOS!")
+    sys.exit()
+LOGGING_PATH = os.path.join(INSTALL_PATH, "tf2-discord.log")
 
 MAPS = {
         "surf_": "surf",
@@ -156,16 +166,6 @@ MAPS = {
         "koth_bagel": "bagelfall"
 }
 
-log_path = ""
-if os.path.isdir(INSTALL_PATH_LINUX):
-    log_path = "/var/log/tf2discord/tf2discord.log"
-elif os.path.isdir(INSTALL_PATH_WINDOWS):
-    log_path = os.path.join(os.getenv('LOCALAPPDATA'), "tf2discord.log")
-
-# truncate log file
-with open(log_path, 'w'):
-    pass
-
 LOGGING_CONFIG = {
     "version": 1.0,
     "disable_existing_loggers": True,
@@ -186,7 +186,7 @@ LOGGING_CONFIG = {
             "level": "DEBUG",
             "formatter": "standard",
             "class": "logging.FileHandler",
-            "filename": log_path,
+            "filename": LOGGING_PATH,
         }
     },
     "loggers": {
