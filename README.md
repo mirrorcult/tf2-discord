@@ -95,7 +95,7 @@ If you need help installing `python` message me on Discord at `cyclowns#1440`.
 - Clone/download this whole repository using `git` or the button at the top.
 - `cd` into the `dist` directory, and run `./build_linux.sh`
 - If your prereqs are set up correctly, after a minute or two a directory called `tf2disc-linux` should appear, containing every file you need to run `tf2-discord`.
-  - One common error on Linux is with `cxfreeze`. Installing `cxfreeze` initially was hell for me, at least on Manjaro/Arch. Pro-tip if you're on either of those: just `pacman -S python_cxfreeze` and don't bother installing with `pip`.
+  - One common error on Linux is with `cxfreeze`. Installing `cxfreeze` initially was hell for me, at least on Manjaro/Arch. Pro-tip if you're on either of those: just `pacman -S python-cx-freeze` and don't bother installing with `pip`.
 - From here, you can install it yourself by following the installation directions above using the `tf2disc-linux` build you created.
 
 ## Building on Windows
