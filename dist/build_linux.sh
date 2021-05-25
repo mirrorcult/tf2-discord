@@ -8,7 +8,7 @@ rm *.py
 
 mkdir tf2disc-linux
 
-cp -r build/exe.linux-x86_64-3.8/* tf2disc-linux
+cp -r build/exe.linux*/* tf2disc-linux
 cp ../build_files/linux/* tf2disc-linux
 cp ../LICENSE tf2disc-linux
 cp ../README.md tf2disc-linux
