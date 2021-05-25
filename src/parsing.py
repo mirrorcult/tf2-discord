@@ -19,7 +19,7 @@ class ConsoleLogParser:
         self.cache_fails = 0
         self.console_log_path = self.get_console_log_path()
 
-    def get_console_log_path(self):
+    async def get_console_log_path(self):
         """Returns the path of the console.log file.
         Errors if path.dat is not configured properly,
         or console.log doesn't exist."""
@@ -42,7 +42,7 @@ class ConsoleLogParser:
         else:
             raise NoPathFileError(pathdat, "No path.dat file could be found at the expected location")
 
-    def parse_console_log(self):
+    async def parse_console_log(self):
         """Parses the console.log file and returns the IP and port
         of the connected server, if found."""
 
@@ -63,13 +63,13 @@ class ConsoleLogParser:
                     break
             return data
 
-    def clear_console_log(self):
+    async def clear_console_log(self):
         """Clears the content of the console.log file."""
 
         log.info("Cleared console.log!")
         open(self.console_log_path, "w").close()
 
-    def cache_console_log(self):
+    async def cache_console_log(self):
         """Caches the console.log file, and checks if the cache has
         changed at all. If it hasn't, it ups a counter (cache_fails).
         If this counter reaches 5, the program assumes you're on

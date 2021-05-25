@@ -5,7 +5,6 @@ from socket import gaierror
 import logging.config
 import psutil
 import asyncio
-import time
 
 from parsing import ConsoleLogParser
 from presence import PresenceHandler
@@ -15,7 +14,7 @@ logging.config.dictConfig(LOGGING_CONFIG)
 log = logging.getLogger("tf2discord")
 
 
-async def tf2_running():
+async def tf2_running() -> bool:
     """Returns true if TF2 is currently running."""
     for proc in psutil.process_iter():
         try:
@@ -29,7 +28,7 @@ async def tf2_running():
     return False
 
 
-async def discord_running():
+async def discord_running() -> bool:
     """Returns True if Discord is currently running."""
     for proc in psutil.process_iter():
         try:
@@ -66,7 +65,7 @@ class TF2Discord:
         self.current_ip = ""
         self.current_port = ""
 
-    async def check_running(self):
+    async def check_running(self) -> bool:
         """Checks if TF2 and Discord are running.
         If either isn't, then sleep and check later.
         If it's running now, then return control flow to run()."""
@@ -75,7 +74,7 @@ class TF2Discord:
             if not self.discord.cleared_presence:
                 log.info("TF2 isn't running! Clearing RPC and console.log..")
                 self.parser.clear_console_log()
-                if discord_running():
+                if await discord_running():
                     # Discord up, TF2 not running
                     self.discord.RPC.clear()
                     self.discord.cleared_presence = True
@@ -87,15 +86,12 @@ class TF2Discord:
                 log.info("Discord isn't running but TF2 is!")
             else:
                 log.info("Discord and TF2 are running!")
-                return
+                return True
+        return False
 
-        time.sleep(30)
-        self.check_running()
-
-    async def run(self):
+    async def run(self) -> None:
         """Main program entry point."""
-        self.check_running()
-
+        if not await self.check_running(): return
         self.discord.cleared_presence = False
         data = self.parser.parse_console_log()
         if data:  # data[0] = type of data
@@ -130,13 +126,10 @@ class TF2Discord:
             self.parser.cache_fails = 0
         self.parser.clear_console_log()
 
-        time.sleep(30)
-        self.run()
-
-
 if __name__ == "__main__":
     # truncate logfile
     with open(LOGGING_PATH, "w") as f:
         pass
+    loop = asyncio.get_event_loop()
     tf2d = TF2Discord()
-    asyncio.run(tf2d.run())
+    asyncio.run_(tf2d.run())
